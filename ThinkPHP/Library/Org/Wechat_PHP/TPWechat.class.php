@@ -18,7 +18,6 @@
  */
 namespace Org\Wechat_PHP;
 use Think\Log;
-include 'wechat.class.php';
 class TPWechat extends Wechat
 {
 	/**
@@ -65,11 +64,6 @@ class TPWechat extends Wechat
 	 */
 	protected function removeCache($cachename){
 		return S($cachename,null);
-	}
-	
-	
-	static function hello(){
-	echo "hello";
 	}
 
 }
