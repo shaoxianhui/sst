@@ -1,0 +1,6 @@
+# 忽略Runtime目录
+Application/Runtime
+# 忽略临时备份文件
+*.backup
+# 忽略bower文件
+Public/bower_components
