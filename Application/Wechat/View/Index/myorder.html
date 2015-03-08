@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>我的订单</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger-theme-future.css">
+
+</head>
+
+<body role="document">
+<div class="container-fluid theme-showcase" role="main">
+    建设中......
+</div>
+<script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/bower_components/messenger/build/js/messenger.min.js"></script>
+<script src="__PUBLIC__/bower_components/messenger/build/js/messenger-theme-future.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        $('.t1-no').hide();
+        $('#user_type').change(function(){
+            $('.t'+$(this).val()+'-no').hide();
+            $('.t'+$(this).val()+'-yes').show();
+            });
+});
+</script>
+</body>
+</html>

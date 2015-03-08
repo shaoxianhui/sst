@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>注册</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger-theme-future.css">
+<link rel="stylesheet" href="__PUBLIC__/Common/areaselect/css/areaselect.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap-datepicker/css/datepicker3.css">
+
+</head>
+
+<body role="document">
+<div class="container-fluid theme-showcase" role="main">
+    <form class="form-horizontal">
+
+        <legend>用户注册</legend>
+        <div class="form-group">
+            <label for="user_type" class="col-sm-2 control-label">注册类别</label>
+            <div class="col-sm-10">
+                <select id="user_type" class="form-control" autofocus>
+                    <option value="1">普通用户</option>
+                    <option value="2">工程人员</option>
+                    <option value="3">销售</option>
+                    <option value="4">申请经销商</option>
+                    <option value="5">经销商</option>
+                    <option value="6">代理商</option>
+                    <option value="7">特邀客户</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="name" required>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="sex" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" value="1" checked="checked"> 男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="sex" value="0"> 女
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="telephone" class="col-sm-2 control-label">联系电话</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="telephone" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="phone" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="qq" class="col-sm-2 control-label">QQ</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="qq">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="location" class="col-sm-2 control-label">所在区域</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="pr1" type="text" placeholder="省份"/>
+            </div>
+            <div class="col-sm-3">
+                <input class="form-control" id="ci1" type="text" placeholder="城市"/>
+            </div>
+            <div class="col-sm-3">
+                <input class="form-control" id="co1" type="text" placeholder="县级"/>
+            </div>
+        </div>
+
+        <div class="form-group t1-yes t2-no t3-no t4-no t5-no t6-no">
+            <label for="hj" class="col-sm-2 control-label">显示屏应用环境</label>
+            <div class="col-sm-10">
+                <select id="hj" class="form-control">
+                    <option>个人</option>
+                    <option>公司</option>
+                    <option>医院</option>
+                    <option>政府</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group t1-yes t2-no t3-no t4-no t5-no t6-no">
+            <label for="date" class="col-sm-2 control-label">安装时间</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="date" required>
+            </div>
+        </div>
+
+        <div class="form-group t1-yes t2-no t3-no t4-no t5-no t6-no">
+            <label for="gx" class="col-sm-2 control-label">显示屏数据更新周期</label>
+            <div class="col-sm-10">
+                <select id="gx" class="form-control">
+                    <option>年</option>
+                    <option>月</option>
+                    <option>星期</option>
+                    <option>日</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group t1-yes t2-no t3-no t4-no t5-no t6-no">
+            <label for="fs" class="col-sm-2 control-label">显示屏数据更新方式</label>
+            <div class="col-sm-10">
+                <select id="fs" class="form-control">
+                    <option>固定电脑</option>
+                    <option>临时电脑</option>
+                    <option>笔记本</option>
+                    <option>手机</option>
+                    <option>其他人帮助更新</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no">
+            <label for="belong" class="col-sm-2 control-label">所属公司</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="belong">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no">
+            <label for="job_start" class="col-sm-2 control-label">工作起始时间</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="job_start">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no">
+            <label for="cy" class="col-sm-2 control-label">常用控制卡品牌</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="cy">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no">
+            <label for="evaluation" class="col-sm-2 control-label">鈊龙卡评价</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="evaluation">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes">
+            <label for="company" class="col-sm-2 control-label">公司名称</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="company">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes">
+            <label for="company_loaction" class="col-sm-2 control-label">公司地址</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="company_location">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes">
+            <label for="company_date" class="col-sm-2 control-label">公司成立时间</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sales">
+            </div>
+        </div>
+
+        <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes">
+            <label for="sales" class="col-sm-2 control-label">控制卡年销售额</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sales" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" checked="checked"> 软件增加新功能时是否通知您
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg btn-block">注册</button>
+    </form>
+</div>
+<script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/bower_components/messenger/build/js/messenger.min.js"></script>
+<script src="__PUBLIC__/bower_components/messenger/build/js/messenger-theme-future.js"></script>
+<!--引用地区选择插件-->
+<script type="text/javascript" src="__PUBLIC__/Common/areaselect/js/data.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Common/areaselect/js/areaselect.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        new locationCard({
+            ids: ['pr1', 'ci1', 'co1']
+        }).init();
+        $('.t1-no').hide();
+        $('#user_type').change(function(){
+            $('.t'+$(this).val()+'-no').hide();
+            $('.t'+$(this).val()+'-yes').show();
+            });
+        $('#date').datepicker({
+            format: "yyyy-mm",
+            startView: 2,
+            minViewMode: 1,
+            clearBtn: true,
+            language: "zh-CN",
+            autoclose: true
+            });
+});
+</script>
+</body>
+</html>
