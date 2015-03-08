@@ -14,7 +14,13 @@ class IndexController extends Controller {
         switch($type) {
         case \Org\Wechat_PHP\Wechat::MSGTYPE_TEXT:           
             D('TextMessage')->addTextMessage($this->wechat->getRevFrom(), $this->wechat->getRevContent(), $this->wechat->getRevCtime());
-            $this->wechat->text("text message!")->reply();
+            $mc = preg_match_all('/\d+/i', $this->wechat->getRevContent(), $ms);
+            if($mc > 0) {
+                $paras = implode(' ', $ms[0]);
+                exec('/var/www/sst/Script/sum '.$paras, $res);
+                $this->wechat->text("echo: \n".implode("\n", $res))->reply();
+            }
+            $this->wechat->text(D('Text')->getText(1))->reply();
             break;
         case \Org\Wechat_PHP\Wechat::MSGTYPE_EVENT:
             $event = $this->wechat->getRevEvent();
@@ -52,5 +58,12 @@ class IndexController extends Controller {
             $this->wechat->text("default rev type!")->reply();
 			break;
         }
+    }
+
+    public function updateMenu() {
+        $menus = D('Menu')->getMenus();
+        dump($menus);
+        $result = $this->wechat->createMenu($menus);
+        echo $result;
     }
 }

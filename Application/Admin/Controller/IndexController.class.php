@@ -35,4 +35,7 @@ class IndexController extends Controller {
         D('Admin')->logout();
         $this->success('退出成功', 'login');
     }
+
+    public function test() {
+    }
 }
