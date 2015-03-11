@@ -33,4 +33,10 @@ class MenuModel extends Model {
         $menus = array('button' => $menus_array);
         return $menus;
     }
+
+    public function getMenu($key) {
+        $where['key'] = $key;
+        return $this->where($where)->find();
+    }
 }
+

@@ -16,18 +16,20 @@
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger-theme-future.css">
+<link rel="stylesheet" href="__PUBLIC__/Common/areaselect/css/areaselect.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap-datepicker/css/datepicker3.css">
 
 </head>
 
 <body role="document">
 <div class="container-fluid theme-showcase" role="main">
-    <form class="form-horizontal">
+    <form class="form-horizontal" action="doCustom/openId/{$openId}" method="post">
 
         <legend>定制项目</legend>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">姓名</label>
             <div class="col-sm-10">
-                <input class="form-control" id="name" required autofocus>
+                <input class="form-control" name="name" required autofocus>
             </div>
         </div>
 
@@ -46,42 +48,48 @@
         <div class="form-group">
             <label for="telephone" class="col-sm-2 control-label">联系电话</label>
             <div class="col-sm-10">
-                <input class="form-control" id="telephone" required>
+                <input class="form-control" name="telephone" required>
             </div>
         </div>
 
         <div class="form-group">
             <label for="company" class="col-sm-2 control-label">公司名称</label>
             <div class="col-sm-10">
-                <input class="form-control" id="company" required>
+                <input class="form-control" name="company" required>
             </div>
         </div>
 
         <div class="form-group">
             <label for="location" class="col-sm-2 control-label">所在区域</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="location">
+            <div class="col-sm-3">
+                <input class="form-control" id="pr" name="pr" type="text" placeholder="省份" required/>
+            </div>
+            <div class="col-sm-3">
+                <input class="form-control" id="ci" name="ci" type="text" placeholder="城市" required/>
+            </div>
+            <div class="col-sm-3">
+                <input class="form-control" id="co" name="co" type="text" placeholder="县级"/>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="company_loaction" class="col-sm-2 control-label">联系地址</label>
+            <label for="loaction" class="col-sm-2 control-label">联系地址</label>
             <div class="col-sm-10">
-                <input class="form-control" id="company_location" required>
+                <input class="form-control" name="location" required>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="cycle" class="col-sm-2 control-label">项目需要完成时间</label>
+            <label for="finishDate" class="col-sm-2 control-label">项目需要完成时间</label>
             <div class="col-sm-10">
-                <input class="form-control" id="cycle">
+                <input class="form-control date" name="finishDate" required>
             </div>
         </div>
 
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">项目描述</label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="description" rows="3"></textarea>
+                <textarea class="form-control" name="description" rows="3" required></textarea>
             </div>
         </div>
 
@@ -92,13 +100,21 @@
 <script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="__PUBLIC__/bower_components/messenger/build/js/messenger.min.js"></script>
 <script src="__PUBLIC__/bower_components/messenger/build/js/messenger-theme-future.js"></script>
+<script src="__PUBLIC__/Common/areaselect/js/data.js"></script>
+<script src="__PUBLIC__/Common/areaselect/js/areaselect.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-        $('.t1-no').hide();
-        $('#user_type').change(function(){
-            $('.t'+$(this).val()+'-no').hide();
-            $('.t'+$(this).val()+'-yes').show();
+        new locationCard({
+            ids: ['pr', 'ci', 'co']
+        }).init();
+        $('.date').datepicker({
+            format: "yyyy-mm-dd",
+            clearBtn: true,
+            language: "zh-CN",
+            autoclose: true
             });
 });
 </script>
