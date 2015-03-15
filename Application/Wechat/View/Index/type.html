@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>型号推荐</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+</head>
+
+<body role="document">
+<div class="container-fluid theme-showcase" role="main">
+    <form class="form-horizontal">
+
+        <legend>型号推荐</legend>
+        <div class="form-group">
+            <label for="type" class="col-sm-2 control-label">颜色</label>
+            <div class="col-sm-10">
+                <select id="type" name="type" class="form-control" autofocus>
+                    <option value="1">单双色</option>
+                    <option value="2">七彩</option>
+                    <option value="3">七彩灰度</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="scan" class="col-sm-2 control-label">扫描类型</label>
+            <div class="col-sm-10">
+                <select id="scan" name="scan" class="form-control">
+			<option value="P10">P10   ——（4扫 T12接口32*16点）</option>
+			<option value="P16">P16   ——（4扫 T12接口 16*8点） </option>
+			<option value="P3.75">P3.75 ——（16扫 T08接口64*32点） </option>
+			<option value="P5">P5    ——（16扫 T08接口 64*32点）</option>
+			<option value="P6">P6    ——（8扫 T08接口 64*16点）</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dot_page" class="col-sm-2 control-label">点数或张数</label>
+            <div class="col-sm-10">
+                <select id="dot_page" name="dot_page" class="form-control">
+                    <option value="D">点数</option>
+                    <option value="" selected="selected">张数</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="width" class="col-sm-2 control-label">宽度</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="width" name="width" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="hight" class="col-sm-2 control-label">高度</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="hight" name="hight" required>
+            </div>
+        </div>
+
+	<div id="result" class="text-center"></div>
+        <button type="button" class="btn btn-success btn-lg btn-block" onclick="calc()">提交</button>
+    </form>
+</div>
+<script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#type').change(function(){
+	$('#scan option').remove();
+	if($('#type').val() == 1) {
+		$('#scan').append( '<option value="P10">P10   ——（4扫 T12接口32*16点）</option> <option value="P16">P16   ——（4扫 T12接口 16*8点） </option> <option value="P3.75">P3.75 ——（16扫 T08接口64*32点） </option> <option value="P5">P5    ——（16扫 T08接口 64*32点）</option> <option value="P6">P6    ——（8扫 T08接口 64*16点）</option> ');
+	}else{
+		$('#scan').append( '<option value="P10">P10  ——（4扫 T75接口16*16点）</option> <option value="P3">P3/P4/P5/P6——（16扫 T75接口32*32点）</option> <option value="P13.33">P13.33  ——（3/6扫 T08/T74A接口 24*12点） </option> <option value="P16">P16 ——（5扫 T08接口20*10点） </option> <option value="P20">P20 ——（4扫 T08接口 16*8点）</option>');
+	}
+	});
+});
+function calc(){
+    $.post("{:U('Wechat/Index/calc')}", {
+	    type : $('#type').val(),
+	    scan : $('#scan').val(),
+	    dot_page : $('#dot_page').val(),
+	    width : $('#width').val(),
+	    hight : $('#hight').val()
+	    }, function(result) {
+                    if(result.success == true) {
+			$('#result').html(result.res);
+                    } else {
+                        alert('false');
+                    }
+            });
+}
+</script>
+</body>
+</html>

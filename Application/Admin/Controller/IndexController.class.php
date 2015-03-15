@@ -4,7 +4,7 @@ use Think\Controller;
 class IndexController extends Controller {
     public function index() {
         if(D('Admin')->isLogged()) {
-            $this->redirect('Admin/Index/base');
+            $this->redirect('Admin/Page/base');
         } else {
             $this->redirect('Admin/Index/login');
         }
@@ -12,7 +12,7 @@ class IndexController extends Controller {
 
     public function login() {
         if(D('Admin')->isLogged()) {
-            $this->redirect('Admin/Index/base');
+            $this->redirect('Admin/Page/base');
         }
         $this->display();
     }
@@ -22,7 +22,7 @@ class IndexController extends Controller {
             if(session('?jump_url')) {
                 $jump_url = session('jump_url');
             } else {
-                $jump_url = 'base';
+                $jump_url = U('Admin/Page/base');
             }
             session('jump_url', null);
             $this->success('登陆成功', $jump_url);
@@ -34,8 +34,5 @@ class IndexController extends Controller {
     public function doLogout() {
         D('Admin')->logout();
         $this->success('退出成功', 'login');
-    }
-
-    public function test() {
     }
 }

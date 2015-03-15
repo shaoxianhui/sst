@@ -2,7 +2,7 @@
 namespace Wechat\Model;
 use Think\Model;
 use Org\Util\String;
-class FcodeModel extends Model {
+class FcodeModel extends TableModel {
     public function genFcode($num, $width) {
         for($i = 0; $i < $num; ) {
             $fcode = String::randString($width);

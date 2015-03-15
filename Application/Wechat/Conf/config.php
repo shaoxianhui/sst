@@ -3,8 +3,9 @@ return array(
 	//'配置项'=>'配置值'
     /* 'SHOW_PAGE_TRACE' => true, */
     'WECHAT' => array(
-        'token'=>'meirixianguo',
-        'appid'=>'wxb9f3a09738245da2',
-        'appsecret'=>'5e2f55e0d2366a8288ace72bd1b8ca24',
+        'token'=>'xinlong',
+        'appid'=>'wx9fde904b8287f304',
+        'appsecret'=>'255c0fb46af625673f2898a3804c611f',
+	'encodingaeskey'=>'KjwO71MdKbnopa795lwu1YVpFvTtKFJh8jfHJN6vLob',
     ),
 );

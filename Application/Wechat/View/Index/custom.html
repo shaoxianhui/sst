@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +13,6 @@
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <!-- Bootstrap theme -->
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger.css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger-theme-future.css">
 <link rel="stylesheet" href="__PUBLIC__/Common/areaselect/css/areaselect.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap-datepicker/css/datepicker3.css">
 
@@ -23,7 +20,7 @@
 
 <body role="document">
 <div class="container-fluid theme-showcase" role="main">
-    <form class="form-horizontal" action="doCustom/openId/{$openId}" method="post">
+    <form class="form-horizontal" action="doCustom/openId/{$openId}" method="post" onsubmit="getElementById('subbutton').disabled=true;return true;">
 
         <legend>定制项目</legend>
         <div class="form-group">
@@ -93,18 +90,15 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success btn-lg btn-block">提交</button>
+        <button type="submit" id="subbutton" class="btn btn-success btn-lg btn-block">提交</button>
     </form>
 </div>
 <script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="__PUBLIC__/bower_components/messenger/build/js/messenger.min.js"></script>
-<script src="__PUBLIC__/bower_components/messenger/build/js/messenger-theme-future.js"></script>
 <script src="__PUBLIC__/Common/areaselect/js/data.js"></script>
 <script src="__PUBLIC__/Common/areaselect/js/areaselect.js"></script>
 <script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
         new locationCard({

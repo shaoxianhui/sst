@@ -14,12 +14,6 @@ class IndexController extends Controller {
         switch($type) {
         case \Org\Wechat_PHP\Wechat::MSGTYPE_TEXT:           
             D('TextMessage')->addTextMessage($this->wechat->getRevFrom(), $this->wechat->getRevContent(), $this->wechat->getRevCtime());
-            $mc = preg_match_all('/\d+/i', $this->wechat->getRevContent(), $ms);
-            if($mc > 0) {
-                $paras = implode(' ', $ms[0]);
-                exec('/var/www/sst/Script/sum '.$paras, $res);
-                $this->wechat->text("echo: \n".implode("\n", $res))->reply();
-            }
             $this->wechat->text(D('Text')->getText(1))->reply();
             break;
         case \Org\Wechat_PHP\Wechat::MSGTYPE_EVENT:
@@ -29,24 +23,20 @@ class IndexController extends Controller {
                 case 'subscribe':
                     $info = $this->wechat->getUserInfo($this->wechat->getRevFrom());
                     $add_or_update = D('User')->addUser($this->wechat->getRevFrom(), $info['nickname'], $this->wechat->getRevSceneId());
-                    if($add_or_update) {
-                        $this->wechat->text(D('Text')->getText(2))->reply();
-                    } else {
-                        $this->wechat->text(D('Text')->getText(3))->reply();
-                    }
+		    $this->wechat->news(D('News')->getNews(array(23,24,25,26)))->reply();
                     break;
                 case 'unsubscribe':
                     D('User')->removeUser($this->wechat->getRevFrom());
                     break;
                 case 'scan':
-					$this->wechat->text("scan event!")->reply();
+		    $this->wechat->text("scan event!")->reply();
                     break;
                 case 'click':
                     D('MenuAction')->action($event['key'], $this->wechat);
                     break;
                 default:
-					$this->wechat->text("default event!")->reply();
-					break;
+		$this->wechat->text("default event!")->reply();
+		break;
                 }
             }
             break;
@@ -74,33 +64,31 @@ class IndexController extends Controller {
         $access_token = $this->wechat->getOauthAccessToken();
         if($access_token) {
             $openId = $access_token['openid'];
-            $user = D('User')->getUser($openId);
-            if($user['register'] == 0) {
-                $this->assign('openId', $openId);
-                $this->display();
-            } else {
-                echo '用户已注册成功!';
-            }
+            $this->assign('openId', $openId);
+            $this->display();
         }
     }
 
-    public function doRegister($openId = null, $fcode = null) {
+    public function doRegister($openId = null, $fcode = null, $name, $phone) {
+        if(!isset($_POST) || count($_POST) == 0) 
+        {
+            $this->error('提交失败！');
+        }
         if(!empty($fcode)) {
             $ret = D('Fcode')->useFcode($fcode);
             if(!$ret)
-                $this->error('邀请码输入错误！', U('Wechat/Index/register'));
+                $this->error('邀请码输入错误！');
         }
-        $user = D('User')->getUser($openId);
         $register = M('Register');
-        $register->create();
-        $register->userId = $user['id'];
+        $data = $register->create();
+        if($data == false) return;
+        $register->openId = $openId;
         $register->installDate .= "-00";
         $register->companyDate .= "-00";
         $register->workDate .= "-00";
         $id = $register->add();
         if($id > 0) {
-            $user['register'] = 1;
-            D('User')->save($user);
+            A('Register')->publish('用户姓名：'.$name.' 手机号：'.$phone.'已注册！');
             $this->success('提交成功！', U('Wechat/Index/register'));
         } else {
             $this->error('提交失败！');
@@ -121,10 +109,14 @@ class IndexController extends Controller {
     }
 
     public function doCustom($openId = null) {
-        $user = D('User')->getUser($openId);
+        if(!isset($_POST) || count($_POST) == 0) 
+        {
+            $this->error('提交失败！');
+        }
         $project = M('Project');
-        $project->create();
-        $project->userId = $user['id'];
+        $data = $project->create();
+        if($data == false) return;
+        $project->openId = $openId;
         $project->finishDate .= "-00";
         $project->ctime = time();
         $id = $project->add();
@@ -150,10 +142,14 @@ class IndexController extends Controller {
     }
 
     public function doCooperation($openId = null) {
-        $user = D('User')->getUser($openId);
+        if(!isset($_POST) || count($_POST) == 0) 
+        {
+            $this->error('提交失败！');
+        }
         $cooperation = M('Cooperation');
-        $cooperation->create();
-        $cooperation->userId = $user['id'];
+        $data = $cooperation->create();
+        if($data == false) return;
+        $cooperation->openId = $openId;
         $cooperation->ctime = time();
         $id = $cooperation->add();
         if($id > 0) {
@@ -162,5 +158,30 @@ class IndexController extends Controller {
 
             $this->error('提交失败！');
         }
+    }
+
+    public function doQuestion() {
+        if(!isset($_POST) || count($_POST) == 0) 
+        {
+            $this->error('提交失败！');
+        }
+        $question = M('Question');
+        $question->create();
+        $question->ctime = time();
+        $id = $question->add();
+        if($id > 0) {
+            $this->success('提交成功！', U('Wechat/Index/question'));
+        } else {
+
+            $this->error('提交失败！');
+        }
+    }
+
+    public function calc($type, $scan, $dot_page, $width, $hight) {
+        $paras = "$type $scan $dot_page $width $hight";
+        exec('/var/www/xinlong/Script/calc '.$paras, $res);
+        $result['res'] = implode("</br>", $res);
+        $result['success'] = true;
+        $this->ajaxReturn($result);
     }
 }
