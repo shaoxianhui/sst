@@ -16,7 +16,7 @@ class MenuActionModel extends Model {
         }
         switch($action['action']) {
         case 'news':
-            $wechat->news(D('News')->getNews(split(',', $action['items'])))->reply();
+            $wechat->news(D('News')->getNews(explode(',', $action['items'])))->reply();
             break;
         case 'text':
             $wechat->text(D('Text')->getText($action['items']))->reply();
