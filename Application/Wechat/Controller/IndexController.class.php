@@ -70,8 +70,7 @@ class IndexController extends Controller {
     }
 
     public function doRegister($openId = null, $fcode = null, $name, $phone) {
-        if(!isset($_POST) || count($_POST) == 0) 
-        {
+        if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
         if(!empty($fcode)) {
@@ -109,8 +108,7 @@ class IndexController extends Controller {
     }
 
     public function doCustom($openId = null) {
-        if(!isset($_POST) || count($_POST) == 0) 
-        {
+        if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
         $project = M('Project');
@@ -142,8 +140,7 @@ class IndexController extends Controller {
     }
 
     public function doCooperation($openId = null) {
-        if(!isset($_POST) || count($_POST) == 0) 
-        {
+        if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
         $cooperation = M('Cooperation');
@@ -161,8 +158,7 @@ class IndexController extends Controller {
     }
 
     public function doQuestion() {
-        if(!isset($_POST) || count($_POST) == 0) 
-        {
+        if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
         $question = M('Question');
@@ -183,5 +179,49 @@ class IndexController extends Controller {
         $result['res'] = implode("</br>", $res);
         $result['success'] = true;
         $this->ajaxReturn($result);
+    }
+
+    public function order($code = null) {
+        if($code == null) {
+            $url = $this->wechat->getOauthRedirect("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", '', 'snsapi_base');
+            Header("Location: $url");
+        }
+        $access_token = $this->wechat->getOauthAccessToken();
+        if($access_token) {
+            $products = M('Product')->select();
+            $this->assign('products', $products);
+            $openId = $access_token['openid'];
+            $this->assign('openId', $openId);
+            $this->display();
+        }
+    }
+
+    public function doOrder($openId = null) {
+        if(!isset($_POST) || count($_POST) == 0) {
+            $this->error('提交失败！');
+        }
+        $order['openId'] = $openId;
+        $order['amount'] = $_POST['amount'];
+        $order['ctime'] = time();
+        $id = M('Order')->data($order)->add();
+        if($id <= 0) {
+            $this->error('提交失败！');
+        }
+        $items = array();
+        foreach($_POST as $key => $value) {
+            if(is_numeric($key) && $value > 0) {
+                $item['orderId'] = $id;
+                $item['productId'] = $key;
+                $item['quantity'] = $value;
+                array_push($items, $item);
+            }
+        }
+        $ret = M('OrderItem')->addAll($items);
+        if($ret > 0) {
+            $this->success('提交成功！', U('Wechat/Index/order'));
+        } else {
+
+            $this->error('提交失败！');
+        }
     }
 }

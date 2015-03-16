@@ -137,7 +137,7 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	// 网络
 	if (g_szNetCard[0] == 0)
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version=  '%s' and Net = '1' and VersionColor = '%s' order by VersionDescribion",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version=  '%s' and Net = '1' and VersionColor = '%s' order by VersionPrice",p_szVersion,szColor);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
@@ -182,7 +182,7 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	// U盘
 	if (g_szUSBCard[0] == 0)
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  order by VersionDescribion",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  order by VersionPrice",p_szVersion,szColor);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
@@ -207,17 +207,16 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	
 
 	// Wifi
-	if (g_szWifiCard[0] == 0)
+	if (g_szWifiCard[0] == 0||strcmp(g_szWifiCard,"AD_W1"))
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  and WIFI = '1' order by VersionDescribion",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  and WIFI = '1' order by VersionPrice",p_szVersion,szColor);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
 			while (sqlite3_step(stmt) == SQLITE_ROW) {
 				iRet = SerachInfo(argv,p_iWidth,p_iHeight,p_szScanPort,(const char*)sqlite3_column_text(stmt,0),p_sqlite);
-				if (!iRet)
+				if (!iRet&&(strcmp((const char*)sqlite3_column_text(stmt,0),"AD-W1")==0|| g_szWifiCard[0] == 0))
 				{
-
 					strcpy(g_szWifiCard,(const char*)sqlite3_column_text(stmt,0));
 					break;
 				}
@@ -241,7 +240,7 @@ int SearchVersion_Scan(char* argv[], int p_iWidth, int p_iHeight, const char* p_
 	int iRet = 0;
 	char szSql[MAX_SQL*10] = {0};	// SQL语句
 
-	sprintf(szSql,"select Version from Version_Scan where Scan =%d",p_iScanType);
+	sprintf(szSql,"select Version from VersionInfo WHERE Version in(select Version from Version_Scan where Scan =%d) ORDER BY VersionPrice",p_iScanType);
 
 	// execute SQL statement
 	if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
@@ -310,7 +309,17 @@ int main(int argc, char* argv[])
 	}
 	else if (strcmp(szScanType,"P6") == 0)
 	{
-		strcpy(szScanType,"P5");
+		if (strcmp(argv[1],"1") != 0)
+		{
+			strcpy(szScanType,"P5");
+		}		
+	}
+	else if (strcmp(szScanType,"P5") == 0)
+	{
+		if (strcmp(argv[1],"1") == 0)
+		{
+			strcpy(szScanType,"P3.75");
+		}		
 	}
 	
  	iRet = sqlite3_open("/var/www/xinlong/Script/LED_DB.db",&sqlSearch);
@@ -361,7 +370,15 @@ int main(int argc, char* argv[])
 
 	if (g_szWifiCard[0])
 	{
-		printf("Wifi卡:%s\n",g_szWifiCard);
+		if (strcmp(g_szWifiCard,"AD-W1"))
+		{
+			printf("Wifi卡:%s+扩展模块\n",g_szWifiCard);
+		}
+		else
+		{
+			printf("Wifi卡:%s\n",g_szWifiCard);
+		}
+		
 	}
 	else
 	{
