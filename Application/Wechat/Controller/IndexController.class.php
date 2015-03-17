@@ -224,4 +224,19 @@ class IndexController extends Controller {
             $this->error('提交失败！');
         }
     }
+
+    public function myorder($code = null) {
+        if($code == null) {
+            $url = $this->wechat->getOauthRedirect("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", '', 'snsapi_base');
+            Header("Location: $url");
+        }
+        $access_token = $this->wechat->getOauthAccessToken();
+        if($access_token) {
+            $openId = $access_token['openid'];
+            $where['openId'] = $openId;
+            $orders = D('Order')->relation(true)->where($where)->order('id desc')->limit(5)->select();
+            $this->assign('orders', $orders);
+            $this->display();
+        }
+    }
 }

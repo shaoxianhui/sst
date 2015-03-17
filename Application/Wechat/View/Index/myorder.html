@@ -13,23 +13,47 @@
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <!-- Bootstrap theme -->
 <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger.css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/messenger/build/css/messenger-theme-future.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap-datepicker/css/datepicker3.css">
 
 </head>
 
 <body role="document">
-<div class="container-fluid theme-showcase" role="main">
-    <h1>建设中......</h1>
-</div>
+    <div class="container-fluid theme-showcase" role="main">
+        <div class="row">
+            <div class="panel-group" id="order" role="tablist" aria-multiselectable="true">
+                <volist name="orders" id="order" key="k" empty="您还没有订单！">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center" role="tab" id="heading{$k}">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#order" href="#order{$k}" aria-expanded="true" aria-controls="order{$k}">
+                                    {$order.ctime|date="Y-m-d H:i:s",###}
+                                </a>
+                            </h4>
+                        </div>
+                        <eq name="k" value="1">
+                        <div id="order{$k}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{$k}">
+                        <else/>
+                        <div id="order{$k}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{$k}">
+                        </eq>
+                            <div class="panel-body">
+                                购买商品：</br>
+                                <volist name="order.items" id="item">
+                                　　　　　{$item.productId|productIdtoName=###}  {$item.quantity}个</br>
+                                </volist>
+                                金额：{$order.amount}元</br>
+                                状态：已发货</br>
+                            </div>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+        </div>
+    </div>
 <script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="__PUBLIC__/bower_components/messenger/build/js/messenger.min.js"></script>
-<script src="__PUBLIC__/bower_components/messenger/build/js/messenger-theme-future.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="__PUBLIC__/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-});
 </script>
 </body>
 </html>

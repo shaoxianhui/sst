@@ -103,41 +103,12 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	int iRet = 0;
 	char szSql[MAX_SQL*10] = {0};	// SQL语句
 
-	char szColor[MAX_SQL] = {0};	// 颜色
-	if (strcmp(argv[1],"1") == 0)
-	{
-#ifdef WIN32
-		WideCharToMultiByte( CP_UTF8, 0, L"单双色", -1,
-			szColor, MAX_SQL, NULL, NULL );
-#else
-		strcpy(szColor,"单双色");
-#endif
-	}
-	else if (strcmp(argv[1],"2") == 0)
-	{
-#ifdef WIN32
-		WideCharToMultiByte( CP_UTF8, 0, L"七彩", -1,
-			szColor, MAX_SQL, NULL, NULL );
-#else
-		strcpy(szColor,"七彩");
-#endif
-	}
-	else if (strcmp(argv[1],"3") == 0)
-	{
-#ifdef WIN32
-		WideCharToMultiByte( CP_UTF8, 0, L"七彩灰度", -1,
-			szColor, MAX_SQL, NULL, NULL );
-#else
-		strcpy(szColor,"七彩灰度");
-#endif
-	}
-
 	
 
 	// 网络
 	if (g_szNetCard[0] == 0)
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version=  '%s' and Net = '1' and VersionColor = '%s' order by VersionPrice",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version=  '%s' and Net = '1' order by VersionPrice",p_szVersion);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
@@ -182,7 +153,7 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	// U盘
 	if (g_szUSBCard[0] == 0)
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  order by VersionPrice",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version= '%s' order by VersionPrice",p_szVersion);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
@@ -209,7 +180,7 @@ int SearchPortInfo(char* argv[], int p_iWidth, int p_iHeight, const char* p_szSc
 	// Wifi
 	if (g_szWifiCard[0] == 0||strcmp(g_szWifiCard,"AD_W1"))
 	{
-		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and VersionColor = '%s'  and WIFI = '1' order by VersionPrice",p_szVersion,szColor);
+		sprintf(szSql,"select Version from VersionInfo where Version= '%s' and WIFI = '1' order by VersionPrice",p_szVersion);
 		// execute SQL statement
 		if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
@@ -240,7 +211,36 @@ int SearchVersion_Scan(char* argv[], int p_iWidth, int p_iHeight, const char* p_
 	int iRet = 0;
 	char szSql[MAX_SQL*10] = {0};	// SQL语句
 
-	sprintf(szSql,"select Version from VersionInfo WHERE Version in(select Version from Version_Scan where Scan =%d) ORDER BY VersionPrice",p_iScanType);
+	char szColor[MAX_SQL] = {0};	// 颜色
+	if (strcmp(argv[1],"1") == 0)
+	{
+#ifdef WIN32
+		WideCharToMultiByte( CP_UTF8, 0, L"单双色", -1,
+			szColor, MAX_SQL, NULL, NULL );
+#else
+		strcpy(szColor,"单双色");
+#endif
+	}
+	else if (strcmp(argv[1],"2") == 0)
+	{
+#ifdef WIN32
+		WideCharToMultiByte( CP_UTF8, 0, L"七彩", -1,
+			szColor, MAX_SQL, NULL, NULL );
+#else
+		strcpy(szColor,"七彩");
+#endif
+	}
+	else if (strcmp(argv[1],"3") == 0)
+	{
+#ifdef WIN32
+		WideCharToMultiByte( CP_UTF8, 0, L"七彩灰度", -1,
+			szColor, MAX_SQL, NULL, NULL );
+#else
+		strcpy(szColor,"七彩灰度");
+#endif
+	}
+
+	sprintf(szSql,"select Version from VersionInfo WHERE Version in(select Version from Version_Scan where Scan =%d) and VersionColor = '%s' ORDER BY VersionPrice",p_iScanType, szColor);
 
 	// execute SQL statement
 	if (sqlite3_prepare(p_sqlite, szSql, -1, &stmt, 0) == SQLITE_OK) {
@@ -338,7 +338,7 @@ int main(int argc, char* argv[])
 	// execute SQL statement
 	if (sqlite3_prepare(sqlSearch, szSql, -1, &stmt, 0) == SQLITE_OK) {
 
-		if (sqlite3_step(stmt) == SQLITE_ROW) {
+		while (sqlite3_step(stmt) == SQLITE_ROW) {
 			iRet = SearchVersion_Scan(argv,sqlite3_column_int(stmt,0),sqlite3_column_int(stmt,1),(const char*)sqlite3_column_text(stmt,2),sqlite3_column_int(stmt,3),sqlSearch);
 		}
 

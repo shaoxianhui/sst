@@ -1,7 +1,7 @@
 <?php
 namespace Wechat\Model;
-use Think\Model;
-class TableModel extends Model {
+use Think\Model\RelationModel;
+class TableModel extends RelationModel {
     public function getCount($search = null) {
         return $this->count();
     }
