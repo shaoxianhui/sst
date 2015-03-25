@@ -19,7 +19,7 @@
 
     <body role="document">
         <div class="container-fluid theme-showcase text-center" role="main">
-        <form class="form-horizontal" action="doOrder/openId/{$openId}" method="post" onsubmit="return check();">
+        <form id="form" class="form-horizontal" action="doOrder/openId/{$openId}" method="post" >
             <volist name="products" id="product">
             <div class="row">
                 <div class="col-sm-4 col-md-2">
@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label for="phone" class="col-sm-2 control-label">手机</label>
                 <div class="col-sm-10">
-                    <input class="form-control" name="phone" value="{$order.phone}" pattern="^\d{11,11}$" title="18045473099" required>
+                    <input class="form-control" name="phone" value="{$order.phone}" pattern="^\d{11,11}$" title="11位数字" required>
                 </div>
             </div>
 
@@ -74,26 +74,30 @@
         <script src="__PUBLIC__/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="__PUBLIC__/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="__PUBLIC__/Common/jquery-spinner/js/jquery.spinner.js"></script>
+        <script src="__PUBLIC__/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                    $('.count').spinner({});
-                    $('.count').on('update', function(oops, field, value){
-                        var total = 0;
-                        $('.count').each(function() {
-                            total += $(this).attr('data-price') * $(this).val()
-                        });
-                        $('#total').text(total.toFixed(2));
-                        $('#amount').val(total.toFixed(2));
+                $('#form').validate({
+                    submitHandler: function(form) {
+                        if($('#amount').val() == 0) {
+                            alert('请选择产品！');
+                            return false;
+                        }
+                        $('#subbutton').attr('disabled', 'disabled');
+                        form.submit();
+                    }
+                });
+                $('.count').spinner({});
+                $('.count').on('update', function(oops, field, value){
+                    var total = 0;
+                    $('.count').each(function() {
+                        total += $(this).attr('data-price') * $(this).val()
                     });
+                    $('#total').text(total.toFixed(2));
+                    $('#amount').val(total.toFixed(2));
+                });
             });
-            function check() {
-                if($('#amount').val() == 0) {
-                    alert('请选择产品！');
-                    return false;
-                }
-                getElementById('subbutton').disabled = true;
-                return true;
-            }
         </script>
 </body>
 </html>
