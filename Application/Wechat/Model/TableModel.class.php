@@ -2,13 +2,24 @@
 namespace Wechat\Model;
 use Think\Model\RelationModel;
 class TableModel extends RelationModel {
+    public $search_column;
     public function getCount($search = null) {
-        return $this->count();
+        if($search != null) {
+            $map[$this->search_column] = array('like', "%$search%");
+            $rows = $this->where($map)->count();
+        } else {
+            return $this->count();
+        }
     }
 
     public function get($start = 0, $length = 10, $order = 'ctime desc', $search = null) {
         $page = $start / $length + 1;
-        $rows = $this->order($order)->page($page.','.$length)->select();
+        if($search != null) {
+            $map[$this->search_column] = array('like', "%$search%");
+            $rows = $this->where($map)->order($order)->page($page.','.$length)->select();
+        } else {
+            $rows = $this->order($order)->page($page.','.$length)->select();
+        }
         if($rows === null)
             return array();
         $this->filter($rows);

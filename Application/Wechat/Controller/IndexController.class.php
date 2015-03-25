@@ -4,9 +4,19 @@ use Think\Controller;
 use Think\Log;
 class IndexController extends Controller {
 	private $wechat;
+    private $group;
 	public function __construct() {
         parent::__construct();
         $this->wechat = new \Org\Wechat_PHP\TPWechat(C('WECHAT'));
+        $this->group = array(
+            "1" => 106,
+            "2" => 105,
+            "3" => 104,
+            "4" => 103,
+            "5" => 102,
+            "6" => 101,
+            "7" => 100
+        );
     }
     public function index() {
 		$this->wechat->valid();
@@ -64,6 +74,14 @@ class IndexController extends Controller {
         $access_token = $this->wechat->getOauthAccessToken();
         if($access_token) {
             $openId = $access_token['openid'];
+            $map['openId'] = $openId;
+            $register = M('Register')->where($map)->order('id desc')->find();
+            if($register != null) {
+                $register['installDate'] = substr($register['installDate'], 0, -3);
+                $register['companyDate'] = substr($register['companyDate'], 0, -3);
+                $register['workDate'] = substr($register['workDate'], 0, -3);
+                $this->assign('register', $register);
+            }
             $this->assign('openId', $openId);
             $this->display();
         }
@@ -73,24 +91,38 @@ class IndexController extends Controller {
         if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
-        if(!empty($fcode)) {
-            $ret = D('Fcode')->useFcode($fcode);
-            if(!$ret)
-                $this->error('邀请码输入错误！');
-        }
+        $map['openId'] = $openId;
         $register = M('Register');
-        $data = $register->create();
-        if($data == false) return;
-        $register->openId = $openId;
-        $register->installDate .= "-00";
-        $register->companyDate .= "-00";
-        $register->workDate .= "-00";
-        $id = $register->add();
-        if($id > 0) {
-            A('Register')->publish('用户姓名：'.$name.' 手机号：'.$phone.'已注册！');
+        $id = $register->where($map)->order('id desc')->find();
+        if($id != null) {
+            $_POST['installDate'] .= "-01";
+            $_POST['companyDate'] .= "-01";
+            $_POST['workDate'] .= "-01";
+            $register->where('id='.$id['id'])->save($_POST);
+            A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
             $this->success('提交成功！', U('Wechat/Index/register'));
         } else {
-            $this->error('提交失败！');
+            if(!empty($fcode)) {
+                $ret = D('Fcode')->useFcode($fcode);
+                if(!$ret)
+                    $this->error('邀请码输入错误！');
+            }
+            $register = M('Register');
+            $data = $register->create();
+            if($data == false) return;
+            $register->openId = $openId;
+            $register->installDate .= "-01";
+            $register->companyDate .= "-01";
+            $register->workDate .= "-01";
+            $id = $register->add();
+            if($id > 0) {
+                A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+                $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
+                $this->success('提交成功！', U('Wechat/Index/register'));
+            } else {
+                $this->error('提交失败！');
+            }
         }
     }
 
@@ -119,6 +151,7 @@ class IndexController extends Controller {
         $project->ctime = time();
         $id = $project->add();
         if($id > 0) {
+            A('Custom')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
             $this->success('提交成功！', U('Wechat/Index/custom'));
         } else {
 
@@ -150,6 +183,7 @@ class IndexController extends Controller {
         $cooperation->ctime = time();
         $id = $cooperation->add();
         if($id > 0) {
+            A('Cooperation')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
             $this->success('提交成功！', U('Wechat/Index/cooperation'));
         } else {
 
@@ -166,6 +200,7 @@ class IndexController extends Controller {
         $question->ctime = time();
         $id = $question->add();
         if($id > 0) {
+            A('Question')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
             $this->success('提交成功！', U('Wechat/Index/question'));
         } else {
 
@@ -192,6 +227,11 @@ class IndexController extends Controller {
             $this->assign('products', $products);
             $openId = $access_token['openid'];
             $this->assign('openId', $openId);
+            $map['openId'] = $openId;
+            $order = M('Order')->where($map)->order('id desc')->find();
+            if($order != null) {
+                $this->assign('order', $order);
+            }
             $this->display();
         }
     }
@@ -202,6 +242,10 @@ class IndexController extends Controller {
         }
         $order['openId'] = $openId;
         $order['amount'] = $_POST['amount'];
+        $order['name'] = $_POST['name'];
+        $order['phone'] = $_POST['phone'];
+        $order['location'] = $_POST['location'];
+        $order['code'] = date('Ymd').substr(microtime(), 4, 4);
         $order['ctime'] = time();
         $id = M('Order')->data($order)->add();
         if($id <= 0) {
@@ -218,6 +262,7 @@ class IndexController extends Controller {
         }
         $ret = M('OrderItem')->addAll($items);
         if($ret > 0) {
+            A('Order')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
             $this->success('提交成功！', U('Wechat/Index/order'));
         } else {
 

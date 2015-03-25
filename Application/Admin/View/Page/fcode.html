@@ -16,11 +16,42 @@
                     <tr>
                         <th>邀请码ID</th>
                         <th>邀请码</th>
+                        <th>属于</th>
                         <th>生成日期</th>
                         <th>使用日期</th>
                     </tr>
                 </thead>
             </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createFcode" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">生成邀请码</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div
+                        class="form-group">
+                        <label for="recipient-name" class="control-label">个数:</label>
+                        <input type="text" class="form-control" id="num">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">属于:</label>
+                        <input type="text" class="form-control" id="belongto">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="createFcode()">生成</button>
+            </div>
         </div>
     </div>
 </div>
@@ -34,6 +65,29 @@
 $(document).ready(function(){
 $('#fcode').addClass('active');
 $.fn.dataTable.TableTools.defaults.sSwfPath='__PUBLIC__/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf';
+TableTools.BUTTONS.create = {
+    "sAction": "text",
+    "sTag": "default",
+    "sFieldBoundary": "",
+    "sFieldSeperator": "\t",
+    "sNewLine": "<br>",
+    "sToolTip": "",
+    "sButtonClass": "DTTT_button_text",
+    "sButtonClassHover": "DTTT_button_text_hover",
+    "sButtonText": "Copy to element",
+    "mColumns": "all",
+    "bHeader": true,
+    "bFooter": true,
+    "bSelectedOnly": true,
+    "fnMouseover": null,
+    "fnMouseout": null,
+    "fnClick": function( nButton, oConfig ) {
+        $('#createFcode').modal();
+    },
+    "fnSelect": null,
+    "fnComplete": null,
+    "fnInit": null
+};
 $('#table').dataTable({
     dom: "Tfrtip",
     searching: true,
@@ -45,6 +99,7 @@ $('#table').dataTable({
     columns: [
                 { "data": "id" , "orderable": true },
                 { "data": "fcode" , "orderable": false },
+                { "data": "belongto" , "orderable": false },
                 { "data": "genTime" , "orderable": false , "render": 
                     function (data, type, row) {
                     var date = new Date(row.genTime * 1000);
@@ -66,10 +121,30 @@ $('#table').dataTable({
                 "sExtends":    "collection",
                 "sButtonText": "Save",
                 "aButtons":    [ "csv", "xls", "pdf" ]
+            },
+            {
+                "sExtends": "create",
+                "sButtonText": "Create"
             }
         ]
         }
         });
 });
+function createFcode() {
+    if($('#num').val() == '' || $('#belongto').val() == '') {
+        alert("请填写邀请码数目和属于！");
+        return;
+    }
+    $.post("{:U('Admin/Fcode/createFcode')}", {
+            num : $('#num').val(),
+            belongto : $('#belongto').val()
+            }, function(result) {
+                if(result.success == true) {
+                    location.reload();
+                } else {
+                    alert('false');
+                }
+    });
+}
 </script>
 </block>

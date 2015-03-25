@@ -8,4 +8,10 @@ class FcodeController extends TemplateController {
         parent::__construct();
         $this->model = D('Wechat/Fcode');
     }
+
+    public function createFcode($num, $belongto) {
+        $this->model->genFcode($num, 6, $belongto);
+        $result['success'] = true;
+        $this->ajaxReturn($result);
+    }
 }

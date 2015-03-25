@@ -26,6 +26,7 @@
                         <th>公司地址</th>
                         <th>公司成立时间</th>
                         <th>销售额</th>
+                        <th>是否认证</th>
                     </tr>
                 </thead>
             </table>
@@ -66,7 +67,11 @@ $('#table').dataTable({
                 { "data": "company" , "orderable": false },
                 { "data": "companyLocation" , "orderable": false },
                 { "data": "companyDate" , "orderable": false },
-                { "data": "sales" , "orderable": false }
+                { "data": "sales" , "orderable": false },
+                { "data": "status" , "orderable": false, "render": 
+                    function (data, type, row) {
+                    return row.status == 1 ? '已认证' : '未认证'; }
+                }
             ],
     tableTools: {
         sRowSelect: "single",

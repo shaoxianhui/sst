@@ -9,7 +9,7 @@ function getWeChatImageUrl($image) {
 function productIdtoName($productId) {
     $product = M('Product')->find($productId);
     if($product != null){
-        return $product['name'];
+        return $product['name'] .' 单价:'. $product['price'].'元';
     } else {
         return '错误商品';
     }

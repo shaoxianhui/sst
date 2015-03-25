@@ -25,6 +25,7 @@
                         <th>安装时间</th>
                         <th>数据更新周期</th>
                         <th>数据更新方式</th>
+                        <th>是否认证</th>
                     </tr>
                 </thead>
             </table>
@@ -57,14 +58,87 @@ $('#table').dataTable({
                     function (data, type, row) {
                     return row.sex == 1 ? '男' : '女'; }
                 },
-                { "data": "telephone" , "orderable": false },
+                { "data": "telephone" , "orderable": true },
                 { "data": "phone" , "orderable": false },
                 { "data": "qq" , "orderable": false },
                 { "data": "pr_ci_co" , "orderable": false },
-                { "data": "scene" , "orderable": false },
+                { "data": "scene" , "orderable": false, "render":
+                    function (data, type, row){
+                        switch(row.scene){
+                            case '0':
+                                return '未选择';
+                                break;
+                            case '1':
+                                return '个人';
+                                break;
+                            case '2':
+                                return '公司';
+                                break;
+                            case '3':
+                                return '医院';
+                                break;
+                            case '4':
+                                return '政府';
+                                break;
+                            default:
+                                return '未选择';
+                                break;
+                        }
+                }},
                 { "data": "installDate" , "orderable": false },
-                { "data": "updateCycle" , "orderable": false },
-                { "data": "updateType" , "orderable": false }
+                { "data": "updateCycle" , "orderable": false, "render":
+                    function (data, type, row){
+                        switch(row.updateCycle){
+                            case '0':
+                                return '未选择';
+                                break;
+                            case '1':
+                                return '年';
+                                break;
+                            case '2':
+                                return '月';
+                                break;
+                            case '3':
+                                return '星期';
+                                break;
+                            case '4':
+                                return '日';
+                                break;
+                            default:
+                                return '未选择';
+                                break;
+                        }
+                }},
+                { "data": "updateType" , "orderable": false, "render":
+                    function (data, type, row){
+                        switch(row.updateType){
+                            case '0':
+                                return '未选择';
+                                break;
+                            case '1':
+                                return '固定电脑';
+                                break;
+                            case '2':
+                                return '临时电脑';
+                                break;
+                            case '3':
+                                return '笔记本';
+                                break;
+                            case '4':
+                                return '手机';
+                                break;
+                            case '5':
+                                return '其他人帮助更新';
+                                break;
+                            default:
+                                return '未选择';
+                                break;
+                        }
+                }},
+                { "data": "status" , "orderable": false, "render": 
+                    function (data, type, row) {
+                    return row.status == 1 ? '已认证' : '未认证'; }
+                }
             ],
     tableTools: {
         sRowSelect: "single",

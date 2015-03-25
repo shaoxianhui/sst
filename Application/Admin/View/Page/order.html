@@ -16,6 +16,7 @@
                     <tr>
                         <th>订单ID</th>
                         <th>openId</th>
+                        <th>订单号</th>
                         <th>金额</th>
                         <th>状态</th>
                         <th>下单时间</th>
@@ -46,6 +47,7 @@ $('#table').dataTable({
     columns: [
                 { "data": "id" , "orderable": true },
                 { "data": "openId" , "orderable": false },
+                { "data": "code" , "orderable": false },
                 { "data": "amount" , "orderable": false },
                 { "data": "status" , "orderable": false, "render": 
                     function (data, type, row) {

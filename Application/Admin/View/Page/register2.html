@@ -25,6 +25,7 @@
                         <th>工作起始时间</th>
                         <th>常用控制卡品牌</th>
                         <th>鈊龙卡评价</th>
+                        <th>是否认证</th>
                     </tr>
                 </thead>
             </table>
@@ -64,7 +65,11 @@ $('#table').dataTable({
                 { "data": "atCompany" , "orderable": false },
                 { "data": "workDate" , "orderable": false },
                 { "data": "brands" , "orderable": false },
-                { "data": "evaluation" , "orderable": false }
+                { "data": "evaluation" , "orderable": false },
+                { "data": "status" , "orderable": false, "render": 
+                    function (data, type, row) {
+                    return row.status == 1 ? '已认证' : '未认证'; }
+                }
             ],
     tableTools: {
         sRowSelect: "single",

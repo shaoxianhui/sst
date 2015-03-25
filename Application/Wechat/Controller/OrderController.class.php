@@ -1,11 +1,11 @@
 <?php
 namespace Wechat\Controller;
 use Think\Log;
-class RegisterController extends QyController {
+class OrderController extends QyController {
     public function __construct()
     {
-        $this->agentid = 1;
-        $this->name = 'register';
+        $this->agentid = 5;
+        $this->name = 'order';
         parent::__construct();
     }
 }

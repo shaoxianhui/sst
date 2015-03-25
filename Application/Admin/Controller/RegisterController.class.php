@@ -15,7 +15,7 @@ class RegisterController extends TemplateController {
         $dir = $order[0]['dir'];
         $users = $this->model->getRegister($type, $start, $length, $order_name.' '.$dir, $search['value']);
         $data['draw'] = $draw;
-        $data['recordsTotal'] = $this->model->getRegisterCount($type);
+        $data['recordsTotal'] = $this->model->getRegisterCount($type, $search['value']);
         $data['recordsFiltered'] = $data['recordsTotal'];
         $data['data'] = $users;
         $this->ajaxReturn($data);

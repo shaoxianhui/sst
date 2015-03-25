@@ -38,8 +38,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 	background: url('../images/spinner.png') no-repeat
 }
 .spinner {
-	height: 25px;
-	width: 71px;
+	height: 50px;
+	width: 142px;
 	overflow: hidden;
 *zoom:1;
 	-webkit-box-shadow: 0 3px 3px -4px #aaa;
@@ -51,24 +51,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 	display: block;
 	float: left;
 	height: 100%;
-	line-height: 25px;
+	line-height: 50px;
 	margin: 0
 }
 .spinner button {
 	border: none;
-	width: 23px;
+	width: 46px;
 	color: #e5312a;
 	font: 22px Arial bold;
 	padding: 0;
 	outline: none
 }
 .spinner .decrease {
-	background-position: 0 -50px;
+	background-position: 0 -100px;
 	cursor: pointer;
 	text-indent: -10000px
 }
 .spinner .decrease[disabled] {
-	background-position: 0 -75px;
+	background-position: 0 -150px;
 	cursor: default
 }
 .spinner .increase {
@@ -77,16 +77,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 	text-indent: -10000px
 }
 .spinner .value {
-	background-position: 0 -100px;
-	width: 24px;
-	height: 27px;
+	background-position: 0 -200px;
+	width: 48px;
+	height: 54px;
 	border: none;
 	font-family: Arial;
 	color: #ffffff;
 	padding: 0px
 }
 .spinner .value.passive {
-	background-position: 0 -25px;
+	background-position: 0 -50px;
 	color: #919191
 }
 .spinner .error, .spinner .invalid {
