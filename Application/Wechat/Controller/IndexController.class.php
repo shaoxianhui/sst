@@ -107,8 +107,8 @@ class IndexController extends Controller {
             $this->success('提交成功！', U('Wechat/Index/register'));
         } else {
             if(!empty($fcode)) {
-                $ret = D('Fcode')->useFcode($fcode);
-                if(!$ret)
+                $belongto = D('Fcode')->useFcode($fcode);
+                if(!$belongto)
                     $this->error('邀请码输入错误！');
             }
             $register = M('Register');
@@ -118,6 +118,7 @@ class IndexController extends Controller {
             $register->installDate .= "-01";
             $register->companyDate .= "-01";
             $register->workDate .= "-01";
+            $register->belongto = isset($belongto) ? $belongto : '';
             $id = $register->add();
             if($id > 0) {
                 if($_POST['type'] > 4){

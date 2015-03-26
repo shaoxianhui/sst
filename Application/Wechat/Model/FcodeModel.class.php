@@ -25,7 +25,7 @@ class FcodeModel extends TableModel {
         } else {
             $fcode['useTime'] = time();
             $this->data($fcode)->save();
-            return true;
+            return $fcode['belongto'];
         }
     }
 }
