@@ -14,4 +14,11 @@ return array(
     'TOKEN_NAME'=> '__hash__',
     'TOKEN_TYPE'=> 'md5',
     'TOKEN_RESET' => true,
+
+    'WECHAT' => array(
+        'token'=>'xinlong',
+        'appid'=>'wx9fde904b8287f304',
+        'appsecret'=>'255c0fb46af625673f2898a3804c611f',
+        'encodingaeskey'=>'KjwO71MdKbnopa795lwu1YVpFvTtKFJh8jfHJN6vLob',
+    ),
 );

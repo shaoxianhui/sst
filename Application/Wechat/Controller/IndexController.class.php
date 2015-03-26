@@ -274,7 +274,7 @@ class IndexController extends Controller {
         $ret = M('OrderItem')->addAll($items);
         if($ret > 0) {
             A('Order')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
-            $this->success('提交成功！', U('Wechat/Index/order_success', array('code' => $order['code'])));
+            $this->success('提交成功！', U('Wechat/Index/order_success', array('itemId' => $ret)));
         } else {
 
             $this->error('提交失败！');
@@ -296,8 +296,27 @@ class IndexController extends Controller {
         }
     }
 
-    public function order_success($code = null) {
-        $this->assign('code', $code);
+    public function order_success($itemId = null) {
+        if($itemId == null)
+            return;
+        $item = M('OrderItem')->find($itemId);
+        $order = D('Order')->relation(true)->find($item['orderId']);
+        $this->assign('order', $order);
         $this->display();
+    }
+
+    public function sendTemplate($openId, $url, $first, $schedule, $remark) {
+        if($openId == null) {
+            return;
+        }
+        $message['touser'] = $openId;
+        $message['template_id'] = '2CDsLqd9Tx3tUMutboAH0PS2pLRQBCrcpCesnuCxFa4';
+        $message['url'] = $url;
+        $message['topcolor'] = '#00FF00';
+        $message['data']['first'] = array('value' => $first, 'color' => '#000000');
+        $message['data']['schedule'] = array('value' => $schedule, 'color' => '#000000');
+        $message['data']['time'] = array('value' => date('Y-m-d'), 'color' => '#000000');
+        $message['data']['remark'] = array('value' => $remark, 'color' => '#FF8715');
+        $this->wechat->sendTemplateMessage($message);
     }
 }

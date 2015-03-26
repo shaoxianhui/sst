@@ -19,6 +19,7 @@ class TemplateController extends Controller {
     public function crud($action = 'none', $data = null, $id = null) {
         switch($action) {
         case 'edit':
+            $this->model->callback_edit($id, $data);
             $this->model->where('id='.$id)->save($data);
             $data['id'] = $id;
             $result['row'] = $data;
@@ -31,6 +32,7 @@ class TemplateController extends Controller {
             $this->ajaxReturn($result);
             break;
         case 'remove':
+            $this->model->callback_delete($id);
             $this->model->relation(true)->delete(join(',', $id));
             $result['id'] = $id;
             $this->ajaxReturn($result);

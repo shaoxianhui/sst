@@ -25,13 +25,14 @@ body {background-color: #FFFFFF}
         <div class="panel panel-default">
             <div class="panel-heading">订单详情</div>
             <div class="panel-body">
-                XX  XX元  XX个</br>
-                XX   XX元  XX个</br>
-                合计：XXX元</br>
-                联系人：</br>
-                联系电话：</br>
-                收货地址：</br>
-                请将<font color="#FF0000">100元</font>汇款到以下帐户，转款时请在备注栏填写“<font color="#FF0000">123456</font>”，3天未付款订单会被系统自动取消。</br>
+                <volist name="order.items" id="item">
+                {$item.productId|productIdtoInfo=###,$order['openId']}  {$item.quantity}个</br>
+                </volist>
+                合计：{$order.amount}元</br>
+                联系人：{$order.name}</br>
+                联系电话：{$order.phone}</br>
+                收货地址：{$order.location}</br>
+                请将<font color="#FF0000">{$order.amount}元</font>汇款到以下帐户，转款时请在备注栏填写“<font color="#FF0000">{$order.code}</font>”，3天未付款订单会被系统自动取消。</br>
             </div>
         </div>
         <div class="panel panel-default">

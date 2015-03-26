@@ -29,4 +29,12 @@ class TableModel extends RelationModel {
     protected function filter(&$rows) {
 
     }
+
+    public function callback_edit($id, $data) {
+
+    }
+
+    public function callback_delete($id) {
+
+    }
 }
