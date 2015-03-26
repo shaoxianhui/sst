@@ -38,18 +38,22 @@
                             <div class="panel-body">
                                 购买商品：</br>
                                 <volist name="order.items" id="item">
-                                　　　　　{$item.productId|productIdtoName=###}  {$item.quantity}个</br>
+                                　　　　　{$item.productId|productIdtoInfo=###,$order['openId']}  {$item.quantity}个</br>
                                 </volist>
                                 订单号：{$order.code}</br>
                                 金额：{$order.amount}元</br>
+                                联系电话：{$order.phone}</br>
+                                地址：{$order.location}</br>
                                 快递公司：{$order.express}</br>
                                 快递单号：{$order.expressCode}</br>
                                 状态：
                                 <switch name="order.status">
-                                    <case value="0">未处理</case>
-                                    <case value="1">已收款</case>
-                                    <case value="2">已发货</case>
-                                    <case value="3">已关闭</case>
+                                    <case value="0">未收款</case>
+                                    <case value="1">确认收款</case>
+                                    <case value="2">备货</case>
+                                    <case value="3">已发货</case>
+                                    <case value="4">订单完成</case>
+                                    <case value="5">订单已取消</case>
                                 </switch>
                                 </br>
                             </div>

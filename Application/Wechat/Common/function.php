@@ -6,10 +6,25 @@ function getWeChatImageUrl($image) {
     }
     return 'http://meirixianguo.com/sst/Public/Wechat/images/'.$image;
 }
-function productIdtoName($productId) {
+function productIdtoInfo($productId, $openId) {
     $product = M('Product')->find($productId);
+    $register = D('Register')->getUserRegister($openId);
+    switch($register['type']) {
+    case 5:
+        $price = $product['price1'];
+        break;
+    case 6:
+        $price = $product['price2'];
+        break;
+    case 7:
+        $price = $product['price3'];
+        break;
+    default:
+        $price = 0;
+        break;
+    }
     if($product != null){
-        return $product['name'] .' 单价:'. $product['price'].'元';
+        return $product['name'] .' 单价:'. $price.'元';
     } else {
         return '错误商品';
     }

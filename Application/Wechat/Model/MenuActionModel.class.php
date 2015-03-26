@@ -9,6 +9,17 @@ class MenuActionModel extends Model {
             return;
         }
         $where['keyId'] = $menu['id'];
+        $count = $this->where($where)->count();
+        if($count > 1) {
+            $openId = $wechat->getRevFrom();
+            $register = D('Register')->getUserRegister($openId);
+            if($register == null) {
+                $condition = 0;
+            } else {
+                $condition = $register['type'];
+            }
+            $where['condition'] = $condition;
+        }
         $action = $this->where($where)->find();
         if($action == null) {
             $wechat->text(D('Text')->getText(4))->reply();

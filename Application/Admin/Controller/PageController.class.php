@@ -8,4 +8,14 @@ class PageController extends Controller {
             $this->redirect('Admin/Index/login');
         }
     }
+
+    public function user($openId = null) {
+        if($openId == null)
+            $this->error('查无此人！');
+        $user = D('Wechat/User')->getUser($openId);
+        $register = D('Wechat/Register')->getUserRegister($openId);
+        $this->assign('user', $user);
+        $this->assign('register', $register);
+        $this->display();
+    }
 }

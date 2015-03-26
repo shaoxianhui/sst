@@ -40,4 +40,9 @@ class RegisterModel extends TableModel {
         }
         return $this->where($map)->count();
     }
+
+    public function getUserRegister($openId) {
+        $map['openId'] = $openId;
+        return $this->where($map)->find();
+    }
 }

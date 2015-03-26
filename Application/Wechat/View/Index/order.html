@@ -29,8 +29,20 @@
                             <div class="caption">
                                 <h3>{$product.name}</h3>
                                 <p>{$product.description}</p>
-                                <p>单价：{$product.price}元</p>
-                                <input type="text" name="{$product.id}" data-price="{$product.price}" class="count"/>
+                                <switch name="type">
+                                <case value="5">
+                                    <p>单价：{$product.price1}元</p> 
+                                    <input type="text" name="{$product.id}" data-price="{$product.price1}" class="count"/>
+                                </case>
+                                <case value="6">
+                                    <p>单价：{$product.price2}元</p> 
+                                    <input type="text" name="{$product.id}" data-price="{$product.price2}" class="count"/>
+                                </case>
+                                <case value="7">
+                                    <p>单价：{$product.price3}元</p> 
+                                    <input type="text" name="{$product.id}" data-price="{$product.price3}" class="count"/>
+                                </case>
+                                </switch>
                             </div>
                         </center>
                     </div>

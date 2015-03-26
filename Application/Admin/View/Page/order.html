@@ -39,6 +39,31 @@
 $(document).ready(function(){
 $('#order').addClass('active');
 $.fn.dataTable.TableTools.defaults.sSwfPath='__PUBLIC__/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf';
+TableTools.BUTTONS.goUser = {
+    "sAction": "text",
+    "sTag": "default",
+    "sFieldBoundary": "",
+    "sFieldSeperator": "\t",
+    "sNewLine": "<br>",
+    "sToolTip": "",
+    "sButtonClass": "DTTT_button_text",
+    "sButtonClassHover": "DTTT_button_text_hover",
+    "sButtonText": "Copy to element",
+    "mColumns": "all",
+    "bHeader": true,
+    "bFooter": true,
+    "bSelectedOnly": true,
+    "fnMouseover": null,
+    "fnMouseout": null,
+    "fnClick": function( nButton, oConfig ) {
+        var data = this.fnGetSelectedData();
+        if(data.length > 0)
+            window.open("{:U('Admin/Page/user', array(), '')}" + "/openId/" + data[0].openId);
+    },
+    "fnSelect": null,
+    "fnComplete": null,
+    "fnInit": null
+};
 editor = new $.fn.dataTable.Editor( {
         ajax: "{:U('Admin/Order/crud')}",
         table: "#table",
@@ -55,10 +80,14 @@ editor = new $.fn.dataTable.Editor( {
                     {
                         label: "状态",
                         name: "status",
-                        type: "radio",
+                        type: "select",
                         ipOpts: [
-                            { label: "已发货", value : 1},
-                            { label: "未发货", value : 0}
+                            { label: "未收款", value : 0},
+                            { label: "确认收款", value : 1},
+                            { label: "备货", value : 2},
+                            { label: "已发货", value : 3},
+                            { label: "订单完成", value : 4},
+                            { label: "订单已取消", value : 5}
                         ],
                         default: 0
                     }
@@ -82,7 +111,21 @@ $('#table').dataTable({
                 { "data": "expressCode" , "orderable": false },
                 { "data": "status" , "orderable": false, "render": 
                     function (data, type, row) {
-                    return row.status == 1 ? '已发货' : '未发货'; }
+                    switch(parseInt(row.status)) {
+                    case 0:
+                        return '未收款';
+                    case 1:
+                        return '确认收款';
+                    case 2:
+                        return '备货';
+                    case 3:
+                        return '已发货';
+                    case 4:
+                        return '订单完成';
+                    case 5:
+                        return '订单已取消';
+                    }
+                    }
                 },
                 { "data": "ctime" , "orderable": false, "render": 
                     function (data, type, row) {
@@ -100,7 +143,11 @@ $('#table').dataTable({
                 "sButtonText": "Save",
                 "aButtons":    [ "csv", "xls", "pdf" ]
             },
-            { sExtends: "editor_edit",   editor: editor }
+            { sExtends: "editor_edit",   editor: editor },
+            {
+                "sExtends": "goUser",
+                "sButtonText": "GoUser"
+            }
         ]
         }
         });

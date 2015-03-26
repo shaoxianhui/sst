@@ -23,6 +23,7 @@
                         <th>联系地址</th>
                         <th>完成日期</th>
                         <th>项目描述</th>
+                        <th>状态</th>
                     </tr>
                 </thead>
             </table>
@@ -43,6 +44,18 @@ editor = new $.fn.dataTable.Editor( {
         ajax: "{:U('Admin/Custom/crud')}",
         table: "#table",
         idSrc: "id",
+        fields: [
+                    {
+                        label: "是否处理",
+                        name: "status",
+                        type: "radio",
+                        ipOpts: [
+                            { label: "已处理", value : 1},
+                            { label: "未处理", value : 0}
+                        ],
+                        default: 0
+                    }
+                ]
     } );
 $('#table').dataTable({
     dom: "Tfrtip",
@@ -64,7 +77,11 @@ $('#table').dataTable({
                 { "data": "pr_ci_co" , "orderable": false },
                 { "data": "location" , "orderable": false },
                 { "data": "finishDate" , "orderable": false },
-                { "data": "description" , "orderable": false }
+                { "data": "description" , "orderable": false },
+                { "data": "status" , "orderable": true, "render": 
+                    function (data, type, row) {
+                    return row.status == 1 ? '已处理' : '未处理'; }
+                }
             ],
     tableTools: {
         sRowSelect: "single",
@@ -76,6 +93,7 @@ $('#table').dataTable({
                 "sButtonText": "Save",
                 "aButtons":    [ "csv", "xls", "pdf" ]
             },
+            { sExtends: "editor_edit",   editor: editor },
             { sExtends: "editor_remove", editor: editor }
         ]
         }

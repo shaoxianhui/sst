@@ -25,6 +25,7 @@
     <form id="form" class="form-horizontal" action="doCooperation/openId/{$openId}" method="post" >
 
         <legend>招商加盟</legend>
+        <font color="#FF0000">感谢您对鈊龙控制卡的关注和支持，请如实填写以下信息，我们会尽快联系您。</font>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">姓名</label>
             <div class="col-sm-10">
@@ -52,7 +53,7 @@
         </div>
 
         <div class="form-group">
-            <label for="company" class="col-sm-2 control-label">公司名称</label>
+            <label for="company" class="col-sm-2 control-label">公司名称或个人</label>
             <div class="col-sm-10">
                 <input class="form-control" name="company" required>
             </div>
@@ -81,7 +82,7 @@
         <div class="form-group">
             <label for="shipments" class="col-sm-2 control-label">预计年出货量</label>
             <div class="col-sm-10">
-                <input class="form-control" name="shipments" required>
+                <input class="form-control" name="shipments" pattern="^\d{1,12}$" title="数字" placeholder="单位万元" required>
             </div>
         </div>
 

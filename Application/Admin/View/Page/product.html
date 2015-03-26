@@ -19,7 +19,9 @@
                         <th>产品描述</th>
                         <th>图片Url</th>
                         <th>内容Url</th>
-                        <th>价格</th>
+                        <th>经销商价格</th>
+                        <th>代理商价格</th>
+                        <th>特邀客户价格</th>
                         <th>是否上架</th>
                     </tr>
                 </thead>
@@ -59,6 +61,18 @@ editor = new $.fn.dataTable.Editor( {
                         name: "url",
                     },
                     {
+                        label: "经销商价格",
+                        name: "price1",
+                    },
+                    {
+                        label: "代理商价格",
+                        name: "price2",
+                    },
+                    {
+                        label: "特邀客户价格",
+                        name: "price3",
+                    },
+                    {
                         label: "是否上架",
                         name: "active",
                         type: "radio",
@@ -84,7 +98,9 @@ $('#table').dataTable({
                 { "data": "description" , "orderable": false },
                 { "data": "imageUrl" , "orderable": false },
                 { "data": "url" , "orderable": false },
-                { "data": "price" , "orderable": false },
+                { "data": "price1" , "orderable": false },
+                { "data": "price2" , "orderable": false },
+                { "data": "price3" , "orderable": false },
                 { "data": "active" , "orderable": false, "render": 
                     function (data, type, row) {
                     return row.active == 1 ? '已上架' : '未上架'; }

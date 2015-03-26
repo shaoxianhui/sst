@@ -24,7 +24,7 @@ class IndexController extends Controller {
         switch($type) {
         case \Org\Wechat_PHP\Wechat::MSGTYPE_TEXT:           
             D('TextMessage')->addTextMessage($this->wechat->getRevFrom(), $this->wechat->getRevContent(), $this->wechat->getRevCtime());
-            $this->wechat->text(D('Text')->getText(1))->reply();
+            $this->wechat->news(D('News')->getNews(array(27)))->reply();
             break;
         case \Org\Wechat_PHP\Wechat::MSGTYPE_EVENT:
             $event = $this->wechat->getRevEvent();
@@ -33,7 +33,7 @@ class IndexController extends Controller {
                 case 'subscribe':
                     $info = $this->wechat->getUserInfo($this->wechat->getRevFrom());
                     $add_or_update = D('User')->addUser($this->wechat->getRevFrom(), $info['nickname'], $this->wechat->getRevSceneId());
-		    $this->wechat->news(D('News')->getNews(array(23,24,25,26)))->reply();
+                    $this->wechat->news(D('News')->getNews(array(23,24,25,26)))->reply();
                     break;
                 case 'unsubscribe':
                     D('User')->removeUser($this->wechat->getRevFrom());
@@ -100,7 +100,9 @@ class IndexController extends Controller {
             $_POST['companyDate'] .= "-01";
             $_POST['workDate'] .= "-01";
             $register->where('id='.$id['id'])->save($_POST);
-            A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            if($_POST['type'] > 4){
+                A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            }
             $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
             $this->success('提交成功！', U('Wechat/Index/register'));
         } else {
@@ -118,7 +120,9 @@ class IndexController extends Controller {
             $register->workDate .= "-01";
             $id = $register->add();
             if($id > 0) {
-                A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+                if($_POST['type'] > 4){
+                    A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+                }
                 $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
                 $this->success('提交成功！', U('Wechat/Index/register'));
             } else {
@@ -224,10 +228,16 @@ class IndexController extends Controller {
         }
         $access_token = $this->wechat->getOauthAccessToken();
         if($access_token) {
+            $openId = $access_token['openid'];
+            $register = D('Register')->getUserRegister($openId);
+            if($register == null || $register['type'] < 5) {
+                echo '<h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1>';
+                return;
+            }
             $products = M('Product')->select();
             $this->assign('products', $products);
-            $openId = $access_token['openid'];
             $this->assign('openId', $openId);
+            $this->assign('type', $register['type']);
             $map['openId'] = $openId;
             $order = M('Order')->where($map)->order('id desc')->find();
             if($order != null) {
