@@ -35,6 +35,29 @@
 $(document).ready(function(){
 $('#news').addClass('active');
 $.fn.dataTable.TableTools.defaults.sSwfPath='__PUBLIC__/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf';
+editor = new $.fn.dataTable.Editor( {
+        ajax: "{:U('Admin/News/crud')}",
+        table: "#table",
+        idSrc: "id",
+        fields: [
+                    {
+                        label: "标题",
+                        name: "title"
+                    },
+                    {
+                        label: "描述",
+                        name: "description",
+                    },
+                    {
+                        label: "图片URL",
+                        name: "picUrl",
+                    },
+                    {
+                        label: "内容URL",
+                        name: "url",
+                    }
+                ]
+    } );
 $('#table').dataTable({
     dom: "Tfrtip",
     searching: true,
@@ -59,7 +82,10 @@ $('#table').dataTable({
                 "sExtends":    "collection",
                 "sButtonText": "Save",
                 "aButtons":    [ "csv", "xls", "pdf" ]
-            }
+            },
+            { sExtends: "editor_create", editor: editor },
+            { sExtends: "editor_edit",   editor: editor },
+            { sExtends: "editor_remove", editor: editor }
         ]
         }
         });
