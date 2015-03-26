@@ -9,20 +9,13 @@
 <div class="row">
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">定制项目</div>
+        <div class="panel-heading">文本消息</div>
         <div style="margin:15px 15px 0px 15px">
             <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>项目ID</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>电话</th>
-                        <th>公司名称</th>
-                        <th>区域</th>
-                        <th>联系地址</th>
-                        <th>完成日期</th>
-                        <th>项目描述</th>
+                        <th>ID</th>
+                        <th>消息内容</th>
                     </tr>
                 </thead>
             </table>
@@ -37,13 +30,8 @@
 <script src="__PUBLIC__/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-$('#custom').addClass('active');
+$('#text').addClass('active');
 $.fn.dataTable.TableTools.defaults.sSwfPath='__PUBLIC__/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf';
-editor = new $.fn.dataTable.Editor( {
-        ajax: "{:U('Admin/Custom/crud')}",
-        table: "#table",
-        idSrc: "id",
-    } );
 $('#table').dataTable({
     dom: "Tfrtip",
     searching: true,
@@ -51,20 +39,10 @@ $('#table').dataTable({
     processing: true,
     serverSide: true,
     order: [[ 0, "desc" ]],
-    ajax: "{:U('Admin/Custom/index')}",
+    ajax: "{:U('Admin/Text/index')}",
     columns: [
                 { "data": "id" , "orderable": true },
-                { "data": "name" , "orderable": false },
-                { "data": "sex" , "orderable": false, "render": 
-                    function (data, type, row) {
-                    return row.sex == 1 ? '男' : '女'; }
-                },
-                { "data": "telephone" , "orderable": false },
-                { "data": "company" , "orderable": false },
-                { "data": "pr_ci_co" , "orderable": false },
-                { "data": "location" , "orderable": false },
-                { "data": "finishDate" , "orderable": false },
-                { "data": "description" , "orderable": false }
+                { "data": "message" , "orderable": false }
             ],
     tableTools: {
         sRowSelect: "single",
@@ -75,8 +53,7 @@ $('#table').dataTable({
                 "sExtends":    "collection",
                 "sButtonText": "Save",
                 "aButtons":    [ "csv", "xls", "pdf" ]
-            },
-            { sExtends: "editor_remove", editor: editor }
+            }
         ]
         }
         });

@@ -1,7 +1,7 @@
 <?php
 namespace Wechat\Model;
 use Think\Model;
-class TextModel extends Model {
+class TextModel extends TableModel {
     public function getText($id) {
         if(S('textMessage_'.$id))
             return S('textMessage_'.$id);

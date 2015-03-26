@@ -1,7 +1,13 @@
 <?php
 namespace Wechat\Model;
 use Think\Model;
-class NewsModel extends Model {
+class NewsModel extends TableModel {
+    protected function filter(&$news) {
+        for($i = 0; $i < count($news); $i++) {
+            $news[$i]['picUrl'] = '<a href="'.$news[$i]['picUrl'].'">点我浏览图片</a>';
+            $news[$i]['url'] = '<a href="'.$news[$i]['url'].'">点我浏览内容</a>';
+        }
+    }
     public function getNews($list) {
         $news = array();
         $count = 0;

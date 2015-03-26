@@ -16,9 +16,9 @@ class TableModel extends RelationModel {
         $page = $start / $length + 1;
         if($search != null) {
             $map[$this->search_column] = array('like', "%$search%");
-            $rows = $this->where($map)->order($order)->page($page.','.$length)->select();
+            $rows = $this->relation(true)->where($map)->order($order)->page($page.','.$length)->select();
         } else {
-            $rows = $this->order($order)->page($page.','.$length)->select();
+            $rows = $this->relation(true)->order($order)->page($page.','.$length)->select();
         }
         if($rows === null)
             return array();

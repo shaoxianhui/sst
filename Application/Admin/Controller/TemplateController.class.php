@@ -24,6 +24,17 @@ class TemplateController extends Controller {
             $result['row'] = $data;
             $this->ajaxReturn($result);
             break;
+        case 'create':
+            $id = $this->model->add($data);
+            $data['id'] = $id;
+            $result['row'] = $data;
+            $this->ajaxReturn($result);
+            break;
+        case 'remove':
+            $this->model->relation(true)->delete(join(',', $id));
+            $result['id'] = $id;
+            $this->ajaxReturn($result);
+            break;
         default:
             break;
         }

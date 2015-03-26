@@ -15,9 +15,12 @@
                 <thead>
                     <tr>
                         <th>订单ID</th>
-                        <th>openId</th>
+                        <th>名字</th>
                         <th>订单号</th>
+                        <th>订单详情</th>
                         <th>金额</th>
+                        <th>快递</th>
+                        <th>快递单号</th>
                         <th>状态</th>
                         <th>下单时间</th>
                     </tr>
@@ -46,9 +49,12 @@ $('#table').dataTable({
     ajax: "{:U('Admin/Order/index')}",
     columns: [
                 { "data": "id" , "orderable": true },
-                { "data": "openId" , "orderable": false },
+                { "data": "name" , "orderable": false },
                 { "data": "code" , "orderable": false },
+                { "data": "products" , "orderable": false },
                 { "data": "amount" , "orderable": false },
+                { "data": "express" , "orderable": false },
+                { "data": "expressCode" , "orderable": false },
                 { "data": "status" , "orderable": false, "render": 
                     function (data, type, row) {
                     return row.amount == 1 ? '已发货' : '未发货'; }

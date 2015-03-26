@@ -1,7 +1,7 @@
 <?php
 namespace Wechat\Model;
 use Think\Model;
-class MenuModel extends Model {
+class MenuModel extends TableModel {
     public function getMenus() {
         $menus_array = array();
         $top_menus = $this->where('upperId is null')->order('sort')->select();

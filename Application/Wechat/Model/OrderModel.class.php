@@ -11,4 +11,28 @@ class OrderModel extends TableModel {
             'mapping_order' => 'id desc'
         )
     );
+
+    protected function filter(&$orders) {
+        for($i = 0; $i < count($orders); $i++) {
+            $user = D('Wechat/User')->getUser($openId);
+            if($user != null){
+                $orders[$i]['nickname'] = $user['nickname'];
+            } else {
+                $orders[$i]['nickname'] = '匿名';
+            }
+            $products = '';
+            for($j = 0; $j < count($orders[$i]['items']); $j++) {
+                $productId = $orders[$i]['items'][$j]['productId'];
+                $product = D('Wechat/Product')->find($productId);
+                if($product != null){
+                    $products .= $product['name'];
+                } else {
+                    $products .= '错误商品';
+                }
+                $products .= ' '.$orders[$i]['items'][$j]['quantity'].'个</br>';
+
+            }
+            $orders[$i]['products'] = $products;
+        }
+    }
 }

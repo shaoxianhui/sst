@@ -59,11 +59,12 @@ class IndexController extends Controller {
         }
     }
 
-    public function updateMenu() {
-        $menus = D('Menu')->getMenus();
-        dump($menus);
+    public function updateMenu($menus = null) {
+        if($menus == null) {
+            $menus = D('Menu')->getMenus();
+        }
         $result = $this->wechat->createMenu($menus);
-        echo $result;
+        //echo $result;
     }
 
     public function register($code = null) {
@@ -263,7 +264,7 @@ class IndexController extends Controller {
         $ret = M('OrderItem')->addAll($items);
         if($ret > 0) {
             A('Order')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
-            $this->success('提交成功！', U('Wechat/Index/order'));
+            $this->success('提交成功！', U('Wechat/Index/order_success', array('code' => $order['code'])));
         } else {
 
             $this->error('提交失败！');
@@ -283,5 +284,10 @@ class IndexController extends Controller {
             $this->assign('orders', $orders);
             $this->display();
         }
+    }
+
+    public function order_success($code = null) {
+        $this->assign('code', $code);
+        $this->display();
     }
 }

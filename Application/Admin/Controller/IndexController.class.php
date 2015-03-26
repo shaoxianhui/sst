@@ -35,4 +35,12 @@ class IndexController extends Controller {
         D('Admin')->logout();
         $this->success('退出成功', 'login');
     }
+
+    public function removeCache($token = null) {
+        if($token == null)
+            return;
+        remove_cache();
+        $result['success'] = true;
+        $this->ajaxReturn($result);
+    }
 }
