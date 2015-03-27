@@ -1,6 +1,6 @@
 <extend name="base" />
 <block name="css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/DataTables/media/css/jquery.dataTables.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/DataTables/media/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/datatables-tabletools/css/dataTables.tableTools.css">
 <link rel="stylesheet" href="__PUBLIC__/Common/DataTables.Editor/css/dataTables.editor.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css">
@@ -20,12 +20,14 @@
                         <th>固定电话</th>
                         <th>手机</th>
                         <th>QQ</th>
-                        <th>区域</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>县</th>
                         <th>显示屏应用环境</th>
                         <th>安装时间</th>
                         <th>数据更新周期</th>
                         <th>数据更新方式</th>
-                        <th>是否认证</th>
+                        <th>是否审核</th>
                     </tr>
                 </thead>
             </table>
@@ -49,12 +51,109 @@ editor = new $.fn.dataTable.Editor( {
         idSrc: "id",
         fields: [
                     {
-                        label: "是否认证",
+                        label: "注册类型",
+                        name: "type",
+                        type: "select",
+                        ipOpts: [
+                            { label: "普通客户", value : 1},
+                            { label: "工程人员", value : 2},
+                            { label: "销售人员", value : 3},
+                            { label: "申请经销商", value : 4},
+                            { label: "经销商", value : 5},
+                            { label: "代理商", value : 6},
+                            { label: "特邀客户", value : 7}
+                        ],
+                        default: 1
+                    },
+                    {
+                        label: "姓名",
+                        name: "name"
+                    },
+                    {
+                        label: "性别",
+                        name: "sex",
+                        type: "radio",
+                        ipOpts: [
+                            { label: "男", value : 1},
+                            { label: "女", value : 0}
+                        ],
+                        default: 0
+                    },
+                    {
+                        label: "固定电话",
+                        name: "telephone"
+                    },
+                    {
+                        label: "手机",
+                        name: "phone"
+                    },
+                    {
+                        label: "QQ",
+                        name: "qq"
+                    },
+                    {
+                        label: "省",
+                        name: "pr"
+                    },
+                    {
+                        label: "市",
+                        name: "ci"
+                    },
+                    {
+                        label: "县",
+                        name: "co"
+                    },
+                    {
+                        label: "显示屏应用环境",
+                        name: "scene",
+                        type: "select",
+                        ipOpts: [
+                            { label: "未选择", value : 0},
+                            { label: "个人", value : 1},
+                            { label: "公司", value : 2},
+                            { label: "医院", value : 3},
+                            { label: "政府", value : 4}
+                        ],
+                        default: 0
+                    },
+                    {
+                        label: "安装时间",
+                        name: "installDate"
+                    },
+                    {
+                        label: "软件更新周期",
+                        name: "updateCycle",
+                        type: "select",
+                        ipOpts: [
+                            { label: "未选择", value : 0},
+                            { label: "年", value : 1},
+                            { label: "月", value : 2},
+                            { label: "星期", value : 3},
+                            { label: "日", value : 4}
+                        ],
+                        default: 0
+                    },
+                    {
+                        label: "软件更新方式",
+                        name: "updateType",
+                        type: "select",
+                        ipOpts: [
+                            { label: "未选择", value : 0},
+                            { label: "固定电脑", value : 1},
+                            { label: "临时电脑", value : 2},
+                            { label: "笔记本", value : 3},
+                            { label: "手机", value : 4},
+                            { label: "其他人帮助更新", value : 5}
+                        ],
+                        default: 0
+                    },
+                    {
+                        label: "是否审核",
                         name: "status",
                         type: "radio",
                         ipOpts: [
-                            { label: "已认证", value : 1},
-                            { label: "未认证", value : 0}
+                            { label: "已审核", value : 1},
+                            { label: "未审核", value : 0}
                         ],
                         default: 0
                     }
@@ -78,7 +177,9 @@ $('#table').dataTable({
                 { "data": "telephone" , "orderable": true },
                 { "data": "phone" , "orderable": false },
                 { "data": "qq" , "orderable": false },
-                { "data": "pr_ci_co" , "orderable": false },
+                { "data": "pr" , "orderable": true },
+                { "data": "ci" , "orderable": true },
+                { "data": "co" , "orderable": true },
                 { "data": "scene" , "orderable": false, "render":
                     function (data, type, row){
                         switch(row.scene){
@@ -154,7 +255,7 @@ $('#table').dataTable({
                 }},
                 { "data": "status" , "orderable": false, "render": 
                     function (data, type, row) {
-                    return row.status == 1 ? '已认证' : '未认证'; }
+                    return row.status == 1 ? '已审核' : '未审核'; }
                 }
             ],
     tableTools: {

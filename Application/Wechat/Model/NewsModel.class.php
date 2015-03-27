@@ -8,6 +8,7 @@ class NewsModel extends TableModel {
             $news[$i]['url'] = '<a href="'.$news[$i]['url'].'">点我浏览内容</a>';
         }
     }
+
     public function getNews($list) {
         $news = array();
         $count = 0;
@@ -23,5 +24,16 @@ class NewsModel extends TableModel {
             $count = $count + 1;
         }
         return $news;
+    }
+
+    public function callback_edit($id, &$data) {
+        preg_match('/"(http:.*)"/', $data['picUrl'], $m);
+        if(count($m) == 2){
+            $data['picUrl'] = $m[1];
+        }
+        preg_match('/"(http:.*)"/', $data['url'], $m);
+        if(count($m) == 2){
+            $data['url'] = $m[1];
+        }
     }
 }

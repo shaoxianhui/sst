@@ -1,6 +1,6 @@
 <extend name="base" />
 <block name="css">
-<link rel="stylesheet" href="__PUBLIC__/bower_components/DataTables/media/css/jquery.dataTables.css">
+<link rel="stylesheet" href="__PUBLIC__/bower_components/DataTables/media/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/datatables-tabletools/css/dataTables.tableTools.css">
 <link rel="stylesheet" href="__PUBLIC__/Common/DataTables.Editor/css/dataTables.editor.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css">
@@ -16,6 +16,8 @@
                     <tr>
                         <th>订单ID</th>
                         <th>名字</th>
+                        <th>电话</th>
+                        <th>地址</th>
                         <th>订单号</th>
                         <th>订单详情</th>
                         <th>金额</th>
@@ -70,6 +72,18 @@ editor = new $.fn.dataTable.Editor( {
         idSrc: "id",
         fields: [
                     {
+                        label: "姓名",
+                        name: "name"
+                    },
+                    {
+                        label: "电话",
+                        name: "phone"
+                    },
+                    {
+                        label: "地址",
+                        name: "location"
+                    },
+                    {
                         label: "快递公司",
                         name: "express"
                     },
@@ -104,6 +118,8 @@ $('#table').dataTable({
     columns: [
                 { "data": "id" , "orderable": true },
                 { "data": "name" , "orderable": false },
+                { "data": "phone" , "orderable": false },
+                { "data": "location" , "orderable": false },
                 { "data": "code" , "orderable": false },
                 { "data": "products" , "orderable": false },
                 { "data": "amount" , "orderable": false },

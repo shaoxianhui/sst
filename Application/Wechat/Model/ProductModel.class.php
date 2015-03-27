@@ -8,4 +8,15 @@ class ProductModel extends TableModel {
             $products[$i]['url'] = '<a href="'.$products[$i]['url'].'">点我浏览内容</a>';
         }
     }
+
+    public function callback_edit($id, &$data) {
+        preg_match('/"(http:.*)"/', $data['imageUrl'], $m);
+        if(count($m) == 2){
+            $data['imageUrl'] = $m[1];
+        }
+        preg_match('/"(http:.*)"/', $data['url'], $m);
+        if(count($m) == 2){
+            $data['url'] = $m[1];
+        }
+    }
 }

@@ -30,7 +30,11 @@ class TableModel extends RelationModel {
 
     }
 
-    public function callback_edit($id, $data) {
+    public function callback_edit($id, &$data) {
+
+    }
+
+    public function callback_create(&$data) {
 
     }
 

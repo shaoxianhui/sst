@@ -235,14 +235,19 @@ class IndexController extends Controller {
                 echo '<h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1>';
                 return;
             }
-            $products = M('Product')->select();
+            $products = M('Product')->where('active=1')->select();
             $this->assign('products', $products);
             $this->assign('openId', $openId);
             $this->assign('type', $register['type']);
             $map['openId'] = $openId;
             $order = M('Order')->where($map)->order('id desc')->find();
             if($order != null) {
-                $this->assign('order', $order);
+                $this->assign('name', $order['name']);
+                $this->assign('location', $order['location']);
+                $this->assign('phone', $order['phone']);
+            } else {
+                $this->assign('name', $register['name']);
+                $this->assign('phone', $register['phone']);
             }
             $this->display();
         }

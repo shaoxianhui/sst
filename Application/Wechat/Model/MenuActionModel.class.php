@@ -1,7 +1,7 @@
 <?php
 namespace Wechat\Model;
 use Think\Model;
-class MenuActionModel extends Model {
+class MenuActionModel extends TableModel {
     public function action($key, $wechat) {
         $menu = D('Menu')->getMenu($key);
         if($menu == null) {

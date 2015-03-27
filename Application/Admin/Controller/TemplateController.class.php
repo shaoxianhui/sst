@@ -26,6 +26,7 @@ class TemplateController extends Controller {
             $this->ajaxReturn($result);
             break;
         case 'create':
+            $this->model->callback_create($data);
             $id = $this->model->add($data);
             $data['id'] = $id;
             $result['row'] = $data;

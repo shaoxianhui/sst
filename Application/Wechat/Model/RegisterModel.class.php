@@ -10,7 +10,6 @@ class RegisterModel extends TableModel {
 
     protected function filter(&$register) {
         for($i = 0; $i < count($register); $i++) {
-            $register[$i]['pr_ci_co'] = $register[$i]['pr'].$register[$i]['ci'].$register[$i]['co'];
             $register[$i]['installDate'] = substr($register[$i]['installDate'], 0, -3);
             $register[$i]['companyDate'] = substr($register[$i]['companyDate'], 0, -3);
             $register[$i]['workDate'] = substr($register[$i]['workDate'], 0, -3);
@@ -57,7 +56,10 @@ class RegisterModel extends TableModel {
         );
     }
 
-    public function callback_edit($id, $data) {
+    public function callback_edit($id, &$data) {
+        $data['installDate'] .= '-01';
+        $data['companyDate'] .= '-01';
+        $data['workDate'] .= '-01';
         $register = $this->find($id);
         if($register['status'] == 0 && $data['status'] == 1)
         {
