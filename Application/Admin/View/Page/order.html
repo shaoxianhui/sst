@@ -62,9 +62,17 @@ TableTools.BUTTONS.goUser = {
         if(data.length > 0)
             window.open("{:U('Admin/Page/user', array(), '')}" + "/openId/" + data[0].openId);
     },
-    "fnSelect": null,
+    "fnSelect": function( nButton, oConfig ) {
+            if ( this.fnGetSelected().length !== 0 ) {
+                $(nButton).removeClass(this.classes.buttons.disabled );
+            } else {
+                $(nButton).addClass(this.classes.buttons.disabled);
+            }
+    },
     "fnComplete": null,
-    "fnInit": null
+    "fnInit": function( nButton, oConfig ) {
+            $(nButton).addClass( this.classes.buttons.disabled );
+    }
 };
 editor = new $.fn.dataTable.Editor( {
         ajax: "{:U('Admin/Order/crud')}",
