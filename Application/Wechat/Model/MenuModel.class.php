@@ -4,7 +4,8 @@ use Think\Model;
 class MenuModel extends TableModel {
     public function getMenus() {
         $menus_array = array();
-        $top_menus = $this->where('upperId is null')->order('sort')->select();
+        $map['type'] = 'upper';
+        $top_menus = $this->where($map)->order('sort')->select();
         $c1 = 0;
         foreach($top_menus as $tm) {
             if($tm['key'] == null) {

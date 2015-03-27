@@ -51,10 +51,11 @@ editor = new $.fn.dataTable.Editor( {
                         name: "type",
                         type: "radio",
                         ipOpts: [
+                            { label: "一级", value : 'upper'},
                             { label: "按钮", value : 'click'},
                             { label: "链接", value : 'view'}
                         ],
-                        default: 0
+                        default: 'upper'
                     },
                     {
                         label: "按键编码",
@@ -70,7 +71,7 @@ editor = new $.fn.dataTable.Editor( {
                     },
                     {
                         label: "顺序",
-                        name: "order",
+                        name: "sort",
                     }
                 ]
     } );
@@ -119,8 +120,8 @@ $('#table').dataTable({
                 { "data": "type" , "orderable": false },
                 { "data": "key" , "orderable": false },
                 { "data": "url" , "orderable": false },
-                { "data": "sort" , "orderable": false },
-                { "data": "upperId" , "orderable": false }
+                { "data": "upperId" , "orderable": false },
+                { "data": "sort" , "orderable": false }
             ],
     tableTools: {
         sRowSelect: "single",
