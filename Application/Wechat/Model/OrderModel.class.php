@@ -22,15 +22,9 @@ class OrderModel extends TableModel {
             }
             $products = '';
             for($j = 0; $j < count($orders[$i]['items']); $j++) {
-                $productId = $orders[$i]['items'][$j]['productId'];
-                $product = D('Wechat/Product')->find($productId);
-                if($product != null){
-                    $products .= $product['name'];
-                } else {
-                    $products .= '错误商品';
-                }
+                $products .= $orders[$i]['items'][$j]['productName'];
+                $products .= ' 单价：'.$orders[$i]['items'][$j]['productPrice'].'元';
                 $products .= ' '.$orders[$i]['items'][$j]['quantity'].'个</br>';
-
             }
             $orders[$i]['products'] = $products;
         }

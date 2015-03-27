@@ -38,7 +38,7 @@
                             <div class="panel-body">
                                 购买商品：</br>
                                 <volist name="order.items" id="item">
-                                　　　　　{$item.productId|productIdtoInfo=###,$order['openId']}  {$item.quantity}个</br>
+                                　　　　　{$item.productName}　{$item.productPrice}元　 {$item.quantity}个</br>
                                 </volist>
                                 订单号：{$order.code}</br>
                                 金额：{$order.amount}元</br>

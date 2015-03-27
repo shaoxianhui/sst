@@ -33,14 +33,17 @@
                                 <case value="5">
                                     <p>单价：{$product.price1}元</p> 
                                     <input type="text" name="{$product.id}" data-price="{$product.price1}" class="count"/>
+                                    <input type="text" name="price{$product.id}" value="{$product.price1}" style="display:none"/>
                                 </case>
                                 <case value="6">
                                     <p>单价：{$product.price2}元</p> 
                                     <input type="text" name="{$product.id}" data-price="{$product.price2}" class="count"/>
+                                    <input type="text" name="price{$product.id}" value="{$product.price2}" style="display:none"/>
                                 </case>
                                 <case value="7">
                                     <p>单价：{$product.price3}元</p> 
                                     <input type="text" name="{$product.id}" data-price="{$product.price3}" class="count"/>
+                                    <input type="text" name="price{$product.id}" value="{$product.price3}" style="display:none"/>
                                 </case>
                                 </switch>
                             </div>

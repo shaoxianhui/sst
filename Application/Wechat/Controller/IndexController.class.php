@@ -273,6 +273,9 @@ class IndexController extends Controller {
             if(is_numeric($key) && $value > 0) {
                 $item['orderId'] = $id;
                 $item['productId'] = $key;
+                $product = M('Product')->find($key);
+                $item['productName'] = $product['name'];
+                $item['productPrice'] = $_POST['price'.$key];
                 $item['quantity'] = $value;
                 array_push($items, $item);
             }

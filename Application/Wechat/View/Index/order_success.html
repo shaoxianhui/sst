@@ -26,7 +26,7 @@ body {background-color: #FFFFFF}
             <div class="panel-heading">订单详情</div>
             <div class="panel-body">
                 <volist name="order.items" id="item">
-                {$item.productId|productIdtoInfo=###,$order['openId']}  {$item.quantity}个</br>
+                {$item.productName}　单价：{$item.productPrice}元　 {$item.quantity}个</br>
                 </volist>
                 合计：{$order.amount}元</br>
                 联系人：{$order.name}</br>
