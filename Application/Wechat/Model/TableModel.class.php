@@ -6,7 +6,11 @@ class TableModel extends RelationModel {
     public $map = array();
     public function getCount($search = null) {
         if($search != null) {
-            $map[$this->search_column] = array('like', "%$search%");
+            $cs = explode(',', $this->search_column);
+            $map['_logic'] = 'or';
+            foreach($cs as $c) {
+                $map[$c] = array('like', "%$search%");
+            }
             $rows = $this->where($map)->count();
         } else {
             return $this->count();
@@ -16,7 +20,12 @@ class TableModel extends RelationModel {
     public function get($start = 0, $length = 10, $order = 'ctime desc', $search = null) {
         $page = $start / $length + 1;
         if($search != null) {
-            $map[$this->search_column] = array('like', "%$search%");
+            $cs = explode(',', $this->search_column);
+            $fi['_logic'] = 'or';
+            foreach($cs as $c) {
+                $fi[$c] = array('like', "%$search%");
+            }
+            $map['_complex'] = $fi;
             $rows = $this->relation(true)->where($map)->order($order)->page($page.','.$length)->select();
         } else {
             $rows = $this->relation(true)->order($order)->page($page.','.$length)->select();

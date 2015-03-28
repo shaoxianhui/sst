@@ -63,7 +63,12 @@ class RegisterModel extends TableModel {
     public function getRegisterCount($type, $search) {
         $map['type'] = $type;
         if($search != null) {
-            $map[$this->search_column] = array('like', "%$search%");
+            $cs = explode(',', $this->search_column);
+            $fi['_logic'] = 'or';
+            foreach($cs as $c) {
+                $fi[$c] = array('like', "%$search%");
+            }
+            $map['_complex'] = $fi;
         }
         return $this->where($map)->count();
     }
