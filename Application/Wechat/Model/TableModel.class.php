@@ -3,6 +3,7 @@ namespace Wechat\Model;
 use Think\Model\RelationModel;
 class TableModel extends RelationModel {
     public $search_column;
+    public $map = array();
     public function getCount($search = null) {
         if($search != null) {
             $map[$this->search_column] = array('like', "%$search%");
@@ -25,7 +26,7 @@ class TableModel extends RelationModel {
         $this->filter($rows);
         return $rows;
     }
-    
+
     protected function filter(&$rows) {
 
     }
@@ -40,5 +41,39 @@ class TableModel extends RelationModel {
 
     public function callback_delete($id) {
 
+    }
+
+    public function toString($data, $map = null, $end = "\n") {
+        if($map == null)
+            $map = $this->map;
+        $str = '';
+        foreach($data as $key => $value) {
+            if($value === '' || $value === null)
+                continue;
+            if(array_key_exists($key, $map))
+            {
+                if(array_key_exists('name', $map[$key]))
+                {
+                    $str .=  $map[$key]['name'].':';
+                }
+                else
+                {
+                    $str .=  $key.':';
+                }
+                if(array_key_exists($value, $map[$key]))
+                {
+                    $str .= $map[$key][$value].$end;
+                }
+                else
+                {
+                    $str .= $value.$end;
+                }
+            }
+            else
+            {
+                $str .=  $key.':'.$value.$end;
+            }
+        }
+        return $str;
     }
 }

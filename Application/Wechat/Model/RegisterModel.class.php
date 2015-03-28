@@ -2,6 +2,29 @@
 namespace Wechat\Model;
 use Think\Model;
 class RegisterModel extends TableModel {
+    public $map = array('name' => array('name' => '名字'),
+                        'type' => array('name' => '注册类型', '1' => '普通用户', '2' => '销售人员', '3' => '申请经销商', '4' => '经销商', '5' => '普通用户', '6' => '代理商', '7' => '特邀客户'),
+                        'sex' => array('name' => '性别', '1' => '男', '0' => '女'),
+                        'telephone' => array('name' => '联系电话'),
+                        'phone' => array('name' => '手机'),
+                        'qq' => array('name' => 'QQ'),
+                        'email' => array('name' => '邮箱'),
+                        'pr' => array('name' => '省'),
+                        'ci' => array('name' => '市'),
+                        'co' => array('name' => '县'),
+                        'scene' => array('name' => '显示屏应用环境', '1' => '个人', '2' => '公司', '3' => '医院', '4' => '政府'),
+                        'installDate' => array('name' => '安装时间'),
+                        'updateCycle' => array('name' => '显示屏数据更新周期', '0' => '未选择', '1' => '年', '2' => '月', '3' => '星期', '4' => '日'),
+                        'updateType' => array('name' => '显示屏数据更新方式', '0' => '未选择', '1' => '固定电脑', '2' => '临时电脑', '3' => '笔记本', '4' => '手机', '5' => '其他人帮助更新'),
+                        'atCompany' => array('name' => '所属公司或个人'),
+                        'workDate' => array('name' => '工作起始时间'),
+                        'brands' => array('name' => '常用控制卡品牌'),
+                        'evaluation' => array('name' => '鈊龙卡评价'),
+                        'company' => array('name' => '公司名称'),
+                        'companyLoaction' => array('name' => '公司地址'),
+                        'companyDate' => array('name' => '公司成立时间'),
+                        'sales' => array('name' => '控制卡年销售额')
+    );
     public function __construct()
     {
         parent::__construct();

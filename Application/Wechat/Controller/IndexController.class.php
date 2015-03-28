@@ -96,12 +96,12 @@ class IndexController extends Controller {
         $register = M('Register');
         $id = $register->where($map)->order('id desc')->find();
         if($id != null) {
-            $_POST['installDate'] .= "-01";
-            $_POST['companyDate'] .= "-01";
-            $_POST['workDate'] .= "-01";
+            $_POST['installDate'] = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
+            $_POST['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
+            $_POST['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->where('id='.$id['id'])->save($_POST);
             if($_POST['type'] > 4){
-                A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+                A('Register')->publish(D('Register')->toString($_POST));
             }
             $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
             $this->success('提交成功！', U('Wechat/Index/register'));
@@ -115,14 +115,14 @@ class IndexController extends Controller {
             $data = $register->create();
             if($data == false) return;
             $register->openId = $openId;
-            $register->installDate .= "-01";
-            $register->companyDate .= "-01";
-            $register->workDate .= "-01";
+            $_POST['installDate'] = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
+            $_POST['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
+            $_POST['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->belongto = isset($belongto) ? $belongto : '';
             $id = $register->add();
             if($id > 0) {
                 if($_POST['type'] > 4){
-                    A('Register')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+                    A('Register')->publish(D('Register')->toString($_POST));
                 }
                 $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
                 $this->success('提交成功！', U('Wechat/Index/register'));
@@ -157,7 +157,7 @@ class IndexController extends Controller {
         $project->ctime = time();
         $id = $project->add();
         if($id > 0) {
-            A('Custom')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            A('Custom')->publish(D('Project')->toString($_POST));
             $this->success('提交成功！', U('Wechat/Index/custom'));
         } else {
 
@@ -189,7 +189,7 @@ class IndexController extends Controller {
         $cooperation->ctime = time();
         $id = $cooperation->add();
         if($id > 0) {
-            A('Cooperation')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            A('Cooperation')->publish(D('Cooperation')->toString($_POST));
             $this->success('提交成功！', U('Wechat/Index/cooperation'));
         } else {
 
@@ -206,7 +206,7 @@ class IndexController extends Controller {
         $question->ctime = time();
         $id = $question->add();
         if($id > 0) {
-            A('Question')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            A('Question')->publish(D('Question')->toString($_POST));
             $this->success('提交成功！', U('Wechat/Index/question'));
         } else {
 
@@ -282,7 +282,7 @@ class IndexController extends Controller {
         }
         $ret = M('OrderItem')->addAll($items);
         if($ret > 0) {
-            A('Order')->publish(json_encode($_POST, JSON_UNESCAPED_UNICODE));
+            A('Order')->publish(D('Order')->toString($_POST));
             $this->success('提交成功！', U('Wechat/Index/order_success', array('itemId' => $ret)));
         } else {
 

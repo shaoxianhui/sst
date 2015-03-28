@@ -2,6 +2,12 @@
 namespace Wechat\Model;
 use Think\Model\RelationModel;
 class OrderModel extends TableModel {
+    public $map = array('name' => array('name' => '姓名'),
+                        'phone' => array('name' => '联系电话'),
+                        'location' => array('name' => '发货地址'),
+                        'code' => array('name' => '订单号'),
+                        'amount' => array('name' => '订单金额')
+    );
     protected $_link = array(
         'OrderItem' => array(
             'mapping_type' => self::HAS_MANY,
