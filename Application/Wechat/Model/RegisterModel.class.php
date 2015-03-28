@@ -28,7 +28,7 @@ class RegisterModel extends TableModel {
     public function __construct()
     {
         parent::__construct();
-        $this->search_column = 'phone';
+        $this->search_column = 'name,phone,telephone';
     }
 
     protected function filter(&$register) {
@@ -44,7 +44,12 @@ class RegisterModel extends TableModel {
         $map['type'] = $type;
 
         if($search != null) {
-            $map[$this->search_column] = array('like', "%$search%");
+            $cs = explode(',', $this->search_column);
+            $fi['_logic'] = 'or';
+            foreach($cs as $c) {
+                $fi[$c] = array('like', "%$search%");
+            }
+            $map['_complex'] = $fi;
             $rows = $this->where($map)->order($order)->page($page.','.$length)->select();
         } else {
             $rows = $this->where($map)->order($order)->page($page.','.$length)->select();
