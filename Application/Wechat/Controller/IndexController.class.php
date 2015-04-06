@@ -100,7 +100,7 @@ class IndexController extends Controller {
             $_POST['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
             $_POST['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->where('id='.$id['id'])->save($_POST);
-            if($_POST['type'] > 4){
+            if($_POST['type'] > 3){
                 A('Register')->publish(D('Register')->toString($_POST));
             }
             $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
@@ -121,7 +121,7 @@ class IndexController extends Controller {
             $register->belongto = isset($belongto) ? $belongto : '';
             $id = $register->add();
             if($id > 0) {
-                if($_POST['type'] > 4){
+                if($_POST['type'] > 3){
                     A('Register')->publish(D('Register')->toString($_POST));
                 }
                 $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
