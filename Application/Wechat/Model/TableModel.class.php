@@ -78,10 +78,6 @@ class TableModel extends RelationModel {
                     $str .= $value.$end;
                 }
             }
-            else
-            {
-                $str .=  $key.':'.$value.$end;
-            }
         }
         return $str;
     }

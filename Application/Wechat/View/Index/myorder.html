@@ -48,7 +48,11 @@
                                 快递单号：{$order.expressCode}</br>
                                 状态：
                                 <switch name="order.status">
-                                    <case value="0">未收款</case>
+                                <case value="0">
+                                未收款</br>
+                                请将<font color="#FF0000">{$order.amount}元</font>汇款到以下帐户，转款时请在备注栏填写“<font color="#FF0000">{$order.code}</font>”，3天未付款订单会被系统自动取消。</br>
+                                <img style="height:auto;max-width:100%" src="__PUBLIC__/Wechat/images/yh.png" />
+                                </case>
                                     <case value="1">确认收款</case>
                                     <case value="2">备货</case>
                                     <case value="3">已发货</case>

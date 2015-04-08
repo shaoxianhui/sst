@@ -76,4 +76,9 @@ class OrderModel extends TableModel {
             );
         }
     }
+    public function __construct()
+    {
+        parent::__construct();
+        $this->search_column = 'name,phone';
+    }
 }

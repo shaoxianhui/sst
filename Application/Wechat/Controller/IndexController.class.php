@@ -104,7 +104,7 @@ class IndexController extends Controller {
                 A('Register')->publish(D('Register')->toString($_POST));
             }
             $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
-            $this->success('提交成功！', U('Wechat/Index/register'));
+            $this->redirect('Wechat/Index/ok');
         } else {
             if(!empty($fcode)) {
                 $belongto = D('Fcode')->useFcode($fcode);
@@ -125,7 +125,7 @@ class IndexController extends Controller {
                     A('Register')->publish(D('Register')->toString($_POST));
                 }
                 $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
-                $this->success('提交成功！', U('Wechat/Index/register'));
+                $this->redirect('Wechat/Index/ok');
             } else {
                 $this->error('提交失败！');
             }
@@ -158,7 +158,7 @@ class IndexController extends Controller {
         $id = $project->add();
         if($id > 0) {
             A('Custom')->publish(D('Project')->toString($_POST));
-            $this->success('提交成功！', U('Wechat/Index/custom'));
+            $this->redirect('Wechat/Index/ok');
         } else {
 
             $this->error('提交失败！');
@@ -190,7 +190,7 @@ class IndexController extends Controller {
         $id = $cooperation->add();
         if($id > 0) {
             A('Cooperation')->publish(D('Cooperation')->toString($_POST));
-            $this->success('提交成功！', U('Wechat/Index/cooperation'));
+            $this->redirect('Wechat/Index/ok');
         } else {
 
             $this->error('提交失败！');
@@ -207,7 +207,7 @@ class IndexController extends Controller {
         $id = $question->add();
         if($id > 0) {
             A('Question')->publish(D('Question')->toString($_POST));
-            $this->success('提交成功！', U('Wechat/Index/question'));
+            $this->redirect('Wechat/Index/ok');
         } else {
 
             $this->error('提交失败！');
@@ -269,6 +269,7 @@ class IndexController extends Controller {
             $this->error('提交失败！');
         }
         $items = array();
+        $str = '';
         foreach($_POST as $key => $value) {
             if(is_numeric($key) && $value > 0) {
                 $item['orderId'] = $id;
@@ -277,12 +278,13 @@ class IndexController extends Controller {
                 $item['productName'] = $product['name'];
                 $item['productPrice'] = $_POST['price'.$key];
                 $item['quantity'] = $value;
+                $str .= $item['productName'] . ' ' . $item['quantity'] . '个' . "\n";
                 array_push($items, $item);
             }
         }
         $ret = M('OrderItem')->addAll($items);
         if($ret > 0) {
-            A('Order')->publish(D('Order')->toString($_POST));
+            A('Order')->publish(D('Order')->toString($_POST) . $str);
             $this->success('提交成功！', U('Wechat/Index/order_success', array('itemId' => $ret)));
         } else {
 
