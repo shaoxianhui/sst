@@ -17,4 +17,9 @@ class CooperationModel extends TableModel {
             $cooperation[$i]['pr_ci_co'] = $cooperation[$i]['pr'].$cooperation[$i]['ci'].$cooperation[$i]['co'];
         }
     }
+    public function __construct()
+    {
+        parent::__construct();
+        $this->search_column = 'name,telephone';
+    }
 }

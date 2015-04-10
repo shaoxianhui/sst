@@ -15,8 +15,10 @@ class MenuActionModel extends TableModel {
             $register = D('Register')->getUserRegister($openId);
             if($register == null) {
                 $condition = 0;
-            } else {
+            } else if($register['status'] == 1){
                 $condition = $register['type'];
+            } else {
+                $condition = 0;
             }
             $where['condition'] = $condition;
         }

@@ -17,4 +17,9 @@ class ProjectModel extends TableModel {
             $project[$i]['pr_ci_co'] = $project[$i]['pr'].$project[$i]['ci'].$project[$i]['co'];
         }
     }
+    public function __construct()
+    {
+        parent::__construct();
+        $this->search_column = 'name,telephone';
+    }
 }

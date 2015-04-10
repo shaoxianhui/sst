@@ -11,7 +11,7 @@ class TableModel extends RelationModel {
             foreach($cs as $c) {
                 $map[$c] = array('like', "%$search%");
             }
-            $rows = $this->where($map)->count();
+            return $this->where($map)->count();
         } else {
             return $this->count();
         }

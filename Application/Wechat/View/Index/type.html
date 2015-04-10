@@ -87,6 +87,12 @@ $(document).ready(function(){
 	});
 });
 function calc(){
+    var regu = /^[0-9]{1,}$/;
+    if(!regu.test($('#width').val()) || !regu.test($('#hight').val()) )
+    {
+        alert('请正确输入高度和宽度！');
+        return;
+    }
     $.post("{:U('Wechat/Index/calc')}", {
 	    type : $('#type').val(),
 	    scan : $('#scan').val(),

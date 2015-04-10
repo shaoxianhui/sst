@@ -8,4 +8,9 @@ class QuestionModel extends TableModel {
                         'application' => array('name' => '显示屏用途'),
                         'description' => array('name' => '提交内容')
     );
+    public function __construct()
+    {
+        parent::__construct();
+        $this->search_column = 'name,phone';
+    }
 }

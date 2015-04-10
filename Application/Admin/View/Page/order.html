@@ -60,7 +60,7 @@ TableTools.BUTTONS.goUser = {
     "fnClick": function( nButton, oConfig ) {
         var data = this.fnGetSelectedData();
         if(data.length > 0)
-            window.open("{:U('Admin/Page/user', array(), '')}" + "/openId/" + data[0].openId);
+        window.location.href = "{:U('Admin/Page/user', array(), '')}" + "/openId/" + data[0].openId;
     },
     "fnSelect": function( nButton, oConfig ) {
             if ( this.fnGetSelected().length !== 0 ) {
@@ -162,11 +162,6 @@ $('#table').dataTable({
         aButtons: [
             "copy",
             "print",
-            {
-                "sExtends":    "collection",
-                "sButtonText": "Save",
-                "aButtons":    [ "csv", "xls", "pdf" ]
-            },
             { sExtends: "editor_edit",   editor: editor },
             {
                 "sExtends": "goUser",
