@@ -29,12 +29,14 @@
     function writeProvinceValue() {
         if (!cur_p) return;
         pInput.val(cur_p);
+        pInput.valid();
         cInput.val('');
         xInput.val('');
     }
     function writeCityValue() {
         if (!cur_c) return;
         cInput.val(cur_c);
+        cInput.valid();
         xInput.val('');
     }
     function writeCountyValue() {

@@ -90,6 +90,19 @@ class RegisterModel extends TableModel {
     }
 
     public function callback_edit($id, &$data) {
+        $check = array();
+        if(strlen($data['phone']) > 16) {
+            array_push($check, array('name'=>'phone', 'status'=>'输入小于16字符'));
+        }
+        if(strlen($data['qq']) > 16) {
+            array_push($check, array('name'=>'qq', 'status'=>'输入小于16字符'));
+        }
+        if(strlen($data['telephone']) > 16) {
+            array_push($check, array('name'=>'telephone', 'status'=>'输入小于16字符'));
+        }
+        if(!empty($check)) {
+            return $check;
+        }
         $data['installDate'] .= '-01';
         $data['companyDate'] .= '-01';
         $data['workDate'] .= '-01';

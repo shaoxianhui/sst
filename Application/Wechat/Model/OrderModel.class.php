@@ -6,7 +6,7 @@ class OrderModel extends TableModel {
                         'phone' => array('name' => '联系电话'),
                         'location' => array('name' => '发货地址'),
                         'code' => array('name' => '订单号'),
-                        'amount' => array('name' => '订单金额')
+                        'amount' => array('name' => '订单金额', 'post' => '元')
     );
     protected $_link = array(
         'OrderItem' => array(

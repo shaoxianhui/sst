@@ -54,7 +54,7 @@ class IndexController extends Controller {
 			$this->wechat->text("image message!")->reply();
             break;
         default:
-            $this->wechat->text("default rev type!")->reply();
+            $this->wechat->news(D('News')->getNews(array(27)))->reply();
 			break;
         }
     }
@@ -96,9 +96,9 @@ class IndexController extends Controller {
         $register = M('Register');
         $id = $register->where($map)->order('id desc')->find();
         if($id != null) {
-            $register['installDate'] = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
-            $register['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
-            $register['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
+            $register->installDate = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
+            $register->companyDate = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
+            $register->workDate = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->where('id='.$id['id'])->save($_POST);
             if($_POST['type'] > 3){
                 A('Register')->publish(D('Register')->toString($_POST));
@@ -115,9 +115,9 @@ class IndexController extends Controller {
             $data = $register->create();
             if($data == false) return;
             $register->openId = $openId;
-            $register['installDate'] = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
-            $register['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
-            $register['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
+            $register->installDate = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
+            $register->companyDate = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
+            $register->workDate = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->belongto = isset($belongto) ? $belongto : '';
             $id = $register->add();
             if($id > 0) {

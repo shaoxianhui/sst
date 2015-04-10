@@ -14,6 +14,15 @@
         <!-- Bootstrap theme -->
         <link rel="stylesheet" href="__PUBLIC__/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="__PUBLIC__/Common/jquery-spinner/css/jquery.spinner.css" />
+        <style type="text/css">  
+            label.error {  
+                color: red;/*错误信息的颜色*/  
+            }  
+            input.error {  
+                border:1px dotted
+                red;/*输入错误的输入框的边框样式*/  
+            }  
+        </style>  
 
     </head>
 
@@ -81,6 +90,7 @@
 				</div>
 			</div>
             <input type="hidden" id="amount" name="amount" value="0"/>
+            <font id="message" color="#FF0000">温馨提示，请确认联系电话和收货地址！</font>
             <div style="margin:0px 0px 10px 0px">
                 <button id="subbutton" type="submit" class="btn btn-success btn-lg btn-block">提交订单</button>
 			</div>

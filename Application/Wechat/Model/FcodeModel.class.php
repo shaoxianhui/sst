@@ -28,4 +28,9 @@ class FcodeModel extends TableModel {
             return $fcode['belongto'];
         }
     }
+    public function __construct()
+    {
+        parent::__construct();
+        $this->search_column = 'fcode';
+    }
 }

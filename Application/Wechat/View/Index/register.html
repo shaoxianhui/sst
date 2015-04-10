@@ -62,21 +62,21 @@
 	<font color="#4FA74F">注册经销商以上类型需要邀请码，请相关经销商联系销售经理索取或选择注册申请经销商，公司收到注册信息后致电审核。</font>
 	</div>
         <div id="divfcode1" class="form-group t1-no t2-no t3-no t4-no t5-yes t6-yes t7-yes" style="display:none">
-            <label for="fcode" class="col-sm-2 control-label">邀请码</label>
+            <label for="fcode" class="col-sm-2 control-label"><font color="#FF0000">*</font>邀请码</label>
             <div class="col-sm-10">
                 <input class="form-control t1-noreq t2-noreq t3-noreq t4-noreq t5-req t6-req t7-req" title="不能为空" name="fcode">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">姓名</label>
+            <label for="name" class="col-sm-2 control-label"><font color="#FF0000">*</font>姓名</label>
             <div class="col-sm-10">
-                <input class="form-control t1-req t2-req t3-req t4-req t5-req t6-req t7-req" name="name" value="{$register.name|default=""}" title="不能为空" maxLenght="16">
+                <input class="form-control t1-req t2-req t3-req t4-req t5-req t6-req t7-req" name="name" value="{$register.name|default=""}" title="不能为空" maxLength="32">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="sex" class="col-sm-2 control-label">性别</label>
+            <label for="sex" class="col-sm-2 control-label"><font color="#FF0000">*</font>性别</label>
             <div class="col-sm-10">
                 <label class="radio-inline">
                     <input type="radio" name="sex" value="1" checked="checked"> 男
@@ -95,7 +95,7 @@
         </div>
 
         <div class="form-group">
-            <label for="phone" class="col-sm-2 control-label">手机</label>
+            <label for="phone" class="col-sm-2 control-label"><font color="#FF0000">*</font>手机</label>
             <div class="col-sm-10">
                 <input class="form-control t1-req t2-req t3-req t4-req t5-req t6-req t7-req" name="phone" pattern="^\d{11,11}$" title="11位数字" value="{$register.phone|default=""}">
             </div>
@@ -118,13 +118,13 @@
         <div class="form-group">
             <label for="location" class="col-sm-2 control-label">所在区域</label>
             <div class="col-sm-3">
-                <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" id="pr" name="pr" type="text" placeholder="省份" value="{$register.pr|default=""}" title="不能为空"/>
+                <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" readonly="readonly" id="pr" name="pr" type="text" placeholder="省份" value="{$register.pr|default=""}" title="不能为空"/>
             </div>
             <div class="col-sm-3">
-                <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" id="ci" name="ci" type="text" placeholder="城市" value="{$register.ci|default=""}" title="不能为空"/>
+                <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" readonly="readonly" id="ci" name="ci" type="text" placeholder="城市" value="{$register.ci|default=""}" title="不能为空"/>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" id="co" name="co" type="text" placeholder="县级" value="{$register.co|default=""}"/>
+                <input class="form-control" id="co" name="co" type="text" readonly="readonly" placeholder="县级" value="{$register.co|default=""}"/>
             </div>
         </div>
 
@@ -141,9 +141,9 @@
         </div>
 
         <div class="form-group t1-yes t2-no t3-no t4-no t5-no t6-no t7-no">
-            <label for="installDate" class="col-sm-2 control-label">安装时间</label>
+            <label for="installDate" class="col-sm-2 control-label"><font color="#FF0000">*</font>安装时间</label>
             <div class="col-sm-10">
-                <input class="form-control date t1-req t2-noreq t3-noreq t4-noreq t5-noreq t6-noreq t7-noreq" id="installDate" name="installDate" value="{$register.installDate|default=""}" title="不能为空"/>
+                <input class="form-control date t1-req t2-noreq t3-noreq t4-noreq t5-noreq t6-noreq t7-noreq" id="installDate" readonly="readonly" name="installDate" value="{$register.installDate|default=""}" title="不能为空"/>
             </div>
         </div>
 
@@ -175,56 +175,56 @@
         </div>
 
         <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no t7-no" style="display:none">
-            <label for="atCompany" class="col-sm-2 control-label">所属公司或个人</label>
+            <label for="atCompany" class="col-sm-2 control-label"><font color="#FF0000">*</font>所属公司或个人</label>
             <div class="col-sm-10">
                 <input class="form-control t1-noreq t2-req t3-req t4-noreq t5-noreq t6-noreq t7-noreq" name="atCompany" value="{$register.atCompany|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no t7-no" style="display:none">
-            <label for="workDate" class="col-sm-2 control-label">工作起始时间</label>
+            <label for="workDate" class="col-sm-2 control-label"><font color="#FF0000">*</font>工作起始时间</label>
             <div class="col-sm-10">
-                <input class="form-control date t1-noreq t2-req t3-req t4-noreq t5-noreq t6-noreq t7-noreq" name="workDate" value="{$register.workDate|default=""}" title="不能为空"/>
+                <input class="form-control date t1-noreq t2-req t3-req t4-noreq t5-noreq t6-noreq t7-noreq" name="workDate" readonly="readonly" value="{$register.workDate|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no t7-no" style="display:none">
-            <label for="brands" class="col-sm-2 control-label">常用控制卡品牌</label>
+            <label for="brands" class="col-sm-2 control-label"><font color="#FF0000">*</font>常用控制卡品牌</label>
             <div class="col-sm-10">
                 <input class="form-control" name="brands" value="{$register.brands|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-yes t3-yes t4-no t5-no t6-no t7-no" style="display:none">
-            <label for="evaluation" class="col-sm-2 control-label">鈊龙卡评价</label>
+            <label for="evaluation" class="col-sm-2 control-label"><font color="#FF0000">*</font>鈊龙卡评价</label>
             <div class="col-sm-10">
                 <input class="form-control" name="evaluation" value="{$register.evaluation|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes t7-yes" style="display:none">
-            <label for="company" class="col-sm-2 control-label">公司名称</label>
+            <label for="company" class="col-sm-2 control-label"><font color="#FF0000">*</font>公司名称</label>
             <div class="col-sm-10">
                 <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" name="company" value="{$register.company|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes t7-yes" style="display:none">
-            <label for="companyLoaction" class="col-sm-2 control-label">公司地址</label>
+            <label for="companyLoaction" class="col-sm-2 control-label"><font color="#FF0000">*</font>公司地址</label>
             <div class="col-sm-10">
                 <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" name="companyLocation" value="{$register.companyLocation|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes t7-yes" style="display:none">
-            <label for="companyDate" class="col-sm-2 control-label">公司成立时间</label>
+            <label for="companyDate" class="col-sm-2 control-label"><font color="#FF0000">*</font>公司成立时间</label>
             <div class="col-sm-10">
-                <input class="form-control date" name="companyDate" value="{$register.companyDate|default=""}" title="不能为空"/>
+                <input class="form-control date" name="companyDate" readonly="readonly" value="{$register.companyDate|default=""}" title="不能为空"/>
             </div>
         </div>
 
         <div class="form-group t1-no t2-no t3-no t4-yes t5-yes t6-yes t7-yes" style="display:none">
-            <label for="sales" class="col-sm-2 control-label">控制卡年销售额</label>
+            <label for="sales" class="col-sm-2 control-label"><font color="#FF0000">*</font>控制卡年销售额</label>
             <div class="col-sm-10">
                 <input class="form-control t1-noreq t2-noreq t3-noreq t4-req t5-req t6-req t7-req" name="sales" value="{$register.sales|default=""}" placeholder="单位万元" title="不能为空"/>
             </div>

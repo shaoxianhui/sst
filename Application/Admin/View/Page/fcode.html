@@ -65,6 +65,11 @@
 $(document).ready(function(){
 $('#fcode').addClass('active');
 $.fn.dataTable.TableTools.defaults.sSwfPath='__PUBLIC__/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf';
+editor = new $.fn.dataTable.Editor( {
+        ajax: "{:U('Admin/Fcode/crud')}",
+        table: "#table",
+        idSrc: "id"
+    } );
 TableTools.BUTTONS.create = {
     "sAction": "text",
     "sTag": "default",
@@ -90,7 +95,6 @@ TableTools.BUTTONS.create = {
 };
 $('#table').dataTable({
     dom: "Tfrtip",
-    searching: true,
     lengthChange: false,
     processing: true,
     serverSide: true,
@@ -120,10 +124,12 @@ $('#table').dataTable({
             {
                 "sExtends": "create",
                 "sButtonText": "Create"
-            }
+            },
+            { sExtends: "editor_remove", editor: editor }
         ]
         }
         });
+$('input[type=search]').attr('placeholder', '邀请码');
 });
 function createFcode() {
     if($('#num').val() == '' || $('#belongto').val() == '') {

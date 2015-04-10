@@ -75,7 +75,7 @@ class TableModel extends RelationModel {
                 }
                 else
                 {
-                    $str .= $value.$end;
+                    $str .= $value.$map[$key]['post'].$end;
                 }
             }
         }

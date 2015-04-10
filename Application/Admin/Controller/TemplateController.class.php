@@ -19,7 +19,11 @@ class TemplateController extends Controller {
     public function crud($action = 'none', $data = null, $id = null) {
         switch($action) {
         case 'edit':
-            $this->model->callback_edit($id, $data);
+            $check = $this->model->callback_edit($id, $data);
+            if(!empty($check)){
+                $error['fieldErrors'] = $check;
+                $this->ajaxReturn($error);
+            }
             $this->model->where('id='.$id)->save($data);
             $data['id'] = $id;
             $result['row'] = $data;
