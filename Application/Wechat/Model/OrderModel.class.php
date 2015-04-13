@@ -5,6 +5,7 @@ class OrderModel extends TableModel {
     public $map = array('name' => array('name' => '姓名'),
                         'phone' => array('name' => '联系电话'),
                         'location' => array('name' => '发货地址'),
+                        'company' => array('name' => '公司'),
                         'code' => array('name' => '订单号'),
                         'amount' => array('name' => '订单金额', 'post' => '元')
     );
@@ -79,6 +80,6 @@ class OrderModel extends TableModel {
     public function __construct()
     {
         parent::__construct();
-        $this->search_column = 'name,phone';
+        $this->search_column = 'name,phone,company';
     }
 }

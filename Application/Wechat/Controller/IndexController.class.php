@@ -23,6 +23,10 @@ class IndexController extends Controller {
         $type = $this->wechat->getRev()->getRevType();
         switch($type) {
         case \Org\Wechat_PHP\Wechat::MSGTYPE_TEXT:           
+            if(preg_match('/^led:(.*)/i', $this->wechat->getRevContent(), $m)) {
+                if(count($m) == 2)
+                    pushText($m[1]);
+            }
             D('TextMessage')->addTextMessage($this->wechat->getRevFrom(), $this->wechat->getRevContent(), $this->wechat->getRevCtime());
             $this->wechat->news(D('News')->getNews(array(27)))->reply();
             break;
@@ -106,6 +110,10 @@ class IndexController extends Controller {
             $this->wechat->updateGroupMembers($this->group[$_POST['type']], $openId);
             $this->redirect('Wechat/Index/ok');
         } else {
+            if(isset($_POST['update']) && $_POST['update'] == 1) {
+                $this->error('您的注册信息已被删除，无法更新，请重新注册！', U('Wechat/Index/register'));
+                return;
+            }
             if(!empty($fcode)) {
                 $belongto = D('Fcode')->useFcode($fcode);
                 if(!$belongto)
@@ -235,7 +243,7 @@ class IndexController extends Controller {
                 echo '<h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1>';
                 return;
             }
-            $products = M('Product')->where('active=1')->select();
+            $products = M('Product')->where('active=1')->order('name asc')->select();
             $this->assign('products', $products);
             $this->assign('openId', $openId);
             $this->assign('type', $register['type']);
@@ -257,11 +265,14 @@ class IndexController extends Controller {
         if(!isset($_POST) || count($_POST) == 0) {
             $this->error('提交失败！');
         }
+        $register = D('Register')->getUserRegister($openId);
         $order['openId'] = $openId;
         $order['amount'] = $_POST['amount'];
         $order['name'] = $_POST['name'];
         $order['phone'] = $_POST['phone'];
         $order['location'] = $_POST['location'];
+        $order['company'] = $register['company'];
+        $_POST['company'] = $register['company'];
         $order['code'] = date('Ymd').substr(microtime(), 4, 4);
         $order['ctime'] = time();
         $id = M('Order')->data($order)->add();

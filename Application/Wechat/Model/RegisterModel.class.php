@@ -92,13 +92,13 @@ class RegisterModel extends TableModel {
     public function callback_edit($id, &$data) {
         $check = array();
         if(strlen($data['phone']) > 16) {
-            array_push($check, array('name'=>'phone', 'status'=>'输入小于16字符'));
+            array_push($check, array('name'=>'phone', 'status'=>'输入不超过16个字符'));
         }
         if(strlen($data['qq']) > 16) {
-            array_push($check, array('name'=>'qq', 'status'=>'输入小于16字符'));
+            array_push($check, array('name'=>'qq', 'status'=>'输入不超过16个字符'));
         }
         if(strlen($data['telephone']) > 16) {
-            array_push($check, array('name'=>'telephone', 'status'=>'输入小于16字符'));
+            array_push($check, array('name'=>'telephone', 'status'=>'输入不超过16个字符'));
         }
         if(!empty($check)) {
             return $check;
@@ -109,12 +109,18 @@ class RegisterModel extends TableModel {
         $register = $this->find($id);
         if($register['status'] == 0 && $data['status'] == 1)
         {
+            if($register['type'] < 5) {
+                $remark = '您的注册申请已经通过。';
+            } else {
+                $remark = '您的注册申请已经通过，“在线下单”、“订单查询”功能可以使用。';
+            }
+
             A('Wechat/Index')->sendTemplate(
                 $register['openId'],
                 '',
                 '注册审核通知',
                 '审核通过',
-                '您的注册申请已经通过，“在线下单”、“订单查询”功能可以使用。'
+                $remark
             );
         }
     }

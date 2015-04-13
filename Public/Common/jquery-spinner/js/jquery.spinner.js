@@ -12,7 +12,14 @@
           if (e.keyCode == keyCodes.up) changeValue(1)
           else if (e.keyCode == keyCodes.down) changeValue(-1)
           else if (getValue(field) != container.data('lastValidValue')) validateAndTrigger(field)
-        })
+        }).bind('keypress', function(e) {
+            var k = window.event ? e.keyCode : e.which;
+            if (((k >= 48) && (k <= 57)) || k == 8 || k == 0) {
+            } else {
+                return false;
+                
+
+        }})
       textField.wrap(container)
 
       var increaseButton = $('<button type="button" class="increase">+</button>').click(function () { changeValue(1) })

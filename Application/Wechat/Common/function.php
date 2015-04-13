@@ -29,3 +29,10 @@ function productIdtoInfo($productId, $openId) {
         return '错误商品';
     }
 }
+
+function pushText($text) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://avengert.wicp.net:1281/Service1.asmx/SetSendTextInfo?p_strText=".$text);
+    $output = curl_exec($ch);
+    curl_close($ch);
+}
