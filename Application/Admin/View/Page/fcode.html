@@ -122,6 +122,11 @@ $('#table').dataTable({
             "copy",
             "print",
             {
+                "sExtends":    "collection",
+                "sButtonText": "Save",
+                "aButtons":    [ "csv", "xls", "pdf" ]
+            },
+            {
                 "sExtends": "create",
                 "sButtonText": "Create"
             },
