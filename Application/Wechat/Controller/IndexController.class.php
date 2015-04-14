@@ -100,9 +100,9 @@ class IndexController extends Controller {
         $register = M('Register');
         $id = $register->where($map)->order('id desc')->find();
         if($id != null) {
-            $register->installDate = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
-            $register->companyDate = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
-            $register->workDate = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
+            $_POST['installDate'] = $_POST['installDate'] == '' ? '2000-01-01' : $_POST['installDate']."-01";
+            $_POST['companyDate'] = $_POST['companyDate'] == '' ? '2000-01-01' : $_POST['companyDate']."-01";
+            $_POST['workDate'] = $_POST['workDate'] == '' ? '2000-01-01' : $_POST['workDate']."-01";
             $register->where('id='.$id['id'])->save($_POST);
             if($_POST['type'] > 3){
                 A('Register')->publish(D('Register')->toString($_POST));
@@ -243,7 +243,7 @@ class IndexController extends Controller {
                 echo '<h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1>';
                 return;
             }
-            $products = M('Product')->where('active=1')->order('name asc')->select();
+            $products = M('Product')->where('active=1')->order('id asc')->select();
             $this->assign('products', $products);
             $this->assign('openId', $openId);
             $this->assign('type', $register['type']);

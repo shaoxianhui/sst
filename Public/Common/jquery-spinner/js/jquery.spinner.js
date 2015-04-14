@@ -6,7 +6,7 @@
       var keyCodes = {up:38, down:40}
       var container = $('<div></div>')
       container.addClass('spinner')
-      var textField = $(this).addClass('value').attr('maxlength', '9').val(options.value)
+      var textField = $(this).addClass('value').attr('maxlength', '5').val(options.value)
         .bind('keyup paste change', function (e) {
           var field = $(this)
           if (e.keyCode == keyCodes.up) changeValue(1)
