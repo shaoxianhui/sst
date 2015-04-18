@@ -3,7 +3,7 @@ namespace Wechat\Controller;
 use Think\Controller;
 use Think\Log;
 class IndexController extends Controller {
-	private $wechat;
+    private $wechat;
     private $group;
 	public function __construct() {
         parent::__construct();
@@ -340,5 +340,9 @@ class IndexController extends Controller {
         $message['data']['time'] = array('value' => date('Y-m-d'), 'color' => '#000000');
         $message['data']['remark'] = array('value' => $remark, 'color' => '#FF8715');
         $this->wechat->sendTemplateMessage($message);
+    }
+
+    public function updateGroupMembers($openId, $type) {
+        $this->wechat->updateGroupMembers($this->group[$type], $openId);
     }
 }
