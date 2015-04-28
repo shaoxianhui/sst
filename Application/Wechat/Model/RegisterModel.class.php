@@ -91,24 +91,32 @@ class RegisterModel extends TableModel {
 
     public function callback_edit($id, &$data) {
         $check = array();
-        if(strlen($data['phone']) > 16) {
+        if(isset($data['phone']) && strlen($data['phone']) > 16) {
             array_push($check, array('name'=>'phone', 'status'=>'输入不超过16个字符'));
         }
-        if(strlen($data['qq']) > 16) {
+        if(isset($data['qq']) && strlen($data['qq']) > 16) {
             array_push($check, array('name'=>'qq', 'status'=>'输入不超过16个字符'));
         }
-        if(strlen($data['telephone']) > 16) {
+        if(isset($data['telephone']) && strlen($data['telephone']) > 16) {
             array_push($check, array('name'=>'telephone', 'status'=>'输入不超过16个字符'));
         }
         if(!empty($check)) {
             return $check;
         }
-        $data['installDate'] .= '-01';
-        $data['companyDate'] .= '-01';
-        $data['workDate'] .= '-01';
+        if(isset($data['installDate'])) {
+            $data['installDate'] .= '-01';
+        }
+        if(isset($data['companyDate'])) {
+            $data['companyDate'] .= '-01';
+        }
+        if(isset($data['workDate'])) {
+            $data['workDate'] .= '-01';
+        }
         $register = $this->find($id);
         $controller = A('Wechat/Index');
-        $controller->updateGroupMembers($register['openId'], $data['type']);
+        if(isset($data['type'])) {
+            $controller->updateGroupMembers($register['openId'], $data['type']);
+        }
         if($register['status'] == 0 && $data['status'] == 1)
         {
             if($register['type'] < 5) {
