@@ -3,7 +3,7 @@ namespace Wechat\Controller;
 use Think\Controller;
 use Think\Log;
 class IndexController extends Controller {
-	private $wechat;
+    private $wechat;
     private $group;
 	public function __construct() {
         parent::__construct();
@@ -240,7 +240,7 @@ class IndexController extends Controller {
             $openId = $access_token['openid'];
             $register = D('Register')->getUserRegister($openId);
             if($register == null || $register['type'] < 5 || $register['status'] == 0) {
-                echo '<h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1>';
+                echo '<html lang="en"><head><meta charset="utf-8"></head><h1><font color="#FF0000">在线下单功能只针对经销商开放，如果您为鈊龙卡经销商请使用注册微信登录。如未注册请联系您的销售代表帮助您完成注册或注册成“申请经销商”客户，我们在收到注册信息后会第一时间联系您。感谢您对鈊龙控制卡的关注和支持！</font></h1></html>';
                 return;
             }
             $products = M('Product')->where('active=1')->order('id asc')->select();
@@ -340,5 +340,9 @@ class IndexController extends Controller {
         $message['data']['time'] = array('value' => date('Y-m-d'), 'color' => '#000000');
         $message['data']['remark'] = array('value' => $remark, 'color' => '#FF8715');
         $this->wechat->sendTemplateMessage($message);
+    }
+
+    public function updateGroupMembers($openId, $type) {
+        $this->wechat->updateGroupMembers($this->group[$type], $openId);
     }
 }

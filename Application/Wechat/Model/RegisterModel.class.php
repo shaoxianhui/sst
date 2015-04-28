@@ -107,6 +107,8 @@ class RegisterModel extends TableModel {
         $data['companyDate'] .= '-01';
         $data['workDate'] .= '-01';
         $register = $this->find($id);
+        $controller = A('Wechat/Index');
+        $controller->updateGroupMembers($register['openId'], $data['type']);
         if($register['status'] == 0 && $data['status'] == 1)
         {
             if($register['type'] < 5) {

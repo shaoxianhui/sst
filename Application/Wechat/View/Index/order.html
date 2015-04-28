@@ -115,6 +115,13 @@
                 });
                 $('.count').spinner({});
                 $('.count').on('update', function(oops, field, value){
+                    var v = $(this).val();
+                    var reg = /^\d{1,5}$/;
+                    if(!reg.test(v)) {
+                        $(this).val(0);
+                    }
+                    v = v.replace(/^0+/, '');
+                    $(this).val(v);
                     var total = 0;
                     $('.count').each(function() {
                         total += $(this).attr('data-price') * $(this).val()
