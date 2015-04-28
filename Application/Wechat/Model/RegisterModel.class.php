@@ -3,7 +3,7 @@ namespace Wechat\Model;
 use Think\Model;
 class RegisterModel extends TableModel {
     public $map = array('name' => array('name' => '名字'),
-                        'type' => array('name' => '注册类型', '1' => '普通用户', '2' => '销售人员', '3' => '申请经销商', '4' => '经销商', '5' => '普通用户', '6' => '代理商', '7' => '特邀客户'),
+                        'type' => array('name' => '注册类型', '1' => '普通用户', '2' => '工程人员', '3' => '销售人员',  '4' => '申请经销商', '5' => '经销商', '6' => '代理商', '7' => '特邀客户'),
                         'sex' => array('name' => '性别', '1' => '男', '0' => '女'),
                         'telephone' => array('name' => '联系电话'),
                         'phone' => array('name' => '手机'),
